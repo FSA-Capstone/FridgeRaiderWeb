@@ -28,7 +28,6 @@ class Nav extends Component {
   handleLogout() {
     this.props.logout()
     this.handleProfileMenuClose()
-    this.props.resetOrders()
     this.props.history.push('/')
   }
 
