@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, Card, CardHeader, CardContent, Typography, Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getRecipe } from '../store';
+import { getRecipe } from '../../store';
 
 class RecipeDetails extends Component {
   constructor(props) {

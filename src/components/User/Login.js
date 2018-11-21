@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Grid, Button, TextField, Typography } from '@material-ui/core'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import { login } from '../store'
+import { login } from '../../store'
 
 class Login extends Component {
 

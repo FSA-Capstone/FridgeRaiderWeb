@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Tabs, Tab } from '@material-ui/core'
 import MyUploadedRecipes from './MyUploadedRecipes';
 import MySavedRecipes from './MySavedRecipes';
-import NewRecipe from './NewRecipe';
+import NewRecipe from '../Recipes/NewRecipe';
 
  class MyRecipes extends Component {
     

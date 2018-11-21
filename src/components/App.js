@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import Nav from './Nav';
-import Login from './Login';
-import RegisterUser from './RegisterUser';
-import RegistrationSuccessful from './RegistrationSuccessful';
+import Login from './User/Login';
+import RegisterUser from './User/RegisterUser';
+import RegistrationSuccessful from './User/RegistrationSuccessful';
 import Home from './Home';
-import Recipes from './Recipes';
-import RecipeDetails from './RecipeDetails';
-import MyAccount from './MyAccount';
-import MyRecipes from './MyRecipes';
+import Recipes from './Recipes/Recipes';
+import RecipeDetails from './Recipes/RecipeDetails';
+import MyAccount from './User/MyAccount';
+import MyRecipes from './User/MyRecipes';
 
 
 class App extends Component {
