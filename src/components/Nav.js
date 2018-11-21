@@ -58,7 +58,7 @@ class Nav extends Component {
           <Toolbar> 
           <div style={{display: "flex", flexGrow: 1, margin: "20px"}}>  
             <Link to="/">
-              <img src="/dist/logo.png" /> 
+              <img src="/dist/logo.png" style={{height: "10vh"}} /> 
             </Link>   
           </div>        
           { 

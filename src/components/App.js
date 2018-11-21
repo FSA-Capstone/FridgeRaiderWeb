@@ -8,8 +8,10 @@ import Nav from './Nav';
 import Login from './Login';
 import RegisterUser from './RegisterUser';
 import RegistrationSuccessful from './RegistrationSuccessful';
-/*
 import Home from './Home';
+import Recipes from './Recipes';
+import RecipeDetails from './RecipeDetails';
+/*
 import MyAccount from './MyAccount';
 import MyRecipes from './MyRecipes';
 */
@@ -30,10 +32,12 @@ class App extends Component {
             <Route path="/login" render={({ history }) => <Login history={history} />} />
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
-            {/*}
+            <Route path="/recipes/:id" render={({ match }) => <RecipeDetails id={parseInt(match.params.id)} /> } />
+            <Route path="/recipes" component={Recipes} />
+            <Route exact path="/" component={Home} />
+            {/*
             <Route exact path="/myaccount" component={MyAccount} />
             <Route exact path="/myrecipes" component={MyRecipes} />
-            <Route exact path="/" component={Home} />
             */}
           </Switch>
         </Fragment>
