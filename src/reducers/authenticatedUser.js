@@ -5,7 +5,7 @@ const _setAuthenticatedUser = (authenticatedUser) => ({ type: SET_AUTHENTICATED_
 
 const login = (credentials) => {
   return (dispatch) => {
-    return axios.post('https://fridge-raider-server.herokuapp.com/api/auth', credentials)
+    return axios.post(`${process.env.API_URL}/api/auth`, credentials)
       .then(response => response.data)
       .then( data => {
           window.localStorage.setItem('token', data.token);
@@ -23,7 +23,7 @@ const exchangeTokenForAuth = () => {
     if(!token) {
       return 
     }
-    return axios.get('https://fridge-raider-server.herokuapp.com/api/auth', {
+    return axios.get(`${process.env.API_URL}/api/auth`, {
       headers: {
           authorization: token
       }})
