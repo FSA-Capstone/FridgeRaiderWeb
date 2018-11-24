@@ -1,24 +1,24 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux'
 import RecipeCard from './RecipeCard';
+import { GridList, GridListTile } from '@material-ui/core';
 
 const Recipes = ({ recipes }) => {
   if(!recipes){
     return null;
   }
   return (
-    <Grid container justify="center">
+    <GridList style={{justifyContent: 'space-around'}}>
     {
       recipes.map(recipe => {
         return (
-          <Grid key={recipe.id} item xs={9} sm={6}>
+          <GridListTile key={recipe.id} style={{height: "400px", width: "300px", margin: "50px 20px"}}>
             <RecipeCard recipe={recipe}/>
-          </Grid>
+          </GridListTile>
         )
       })
     }
-    </Grid>
+    </GridList>
   );
 }
 
