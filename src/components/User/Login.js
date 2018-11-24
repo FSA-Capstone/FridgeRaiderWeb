@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Grid, Button, TextField, Typography } from '@material-ui/core';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import { login } from '../../store';
-import firebase, { auth, provider } from './firebase.js';
+import { checkForLoggedInGoogleUser, login } from '../../store';
+import { auth, provider } from './firebase.js';
 
 class Login extends Component {
   constructor() {
@@ -12,8 +12,7 @@ class Login extends Component {
     this.state = {
       userName: '',
       password: '',
-      error: '',
-      user: ''
+      error: ''
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,45 +24,12 @@ class Login extends Component {
     });
   };
 
-  componentDidUpdate() {
-    console.log(this.state.user);
-  }
-
   loginWithGoogle() {
     auth.signInWithRedirect(provider);
   }
 
-  async componentDidMount() {
-    const result = await firebase.auth().getRedirectResult();
-
-    if (result.user) {
-      this.setState({ user: result.user });
-      console.log('local user:', this.state.user);
-    }
-
-    if (firebase.auth().currentUser) {
-      const idToken = firebase
-        .auth()
-        .currentUser.getIdToken(/* forceRefresh */ true);
-
-      console.log(idToken);
-    }
-    //axios.post('/firebase', {token: idToken});
-
-    // Send token to your backend via HTTPS
-
-    //.catch(function(error) {
-    //console.log(error);
-
-    // Handle error
-  }
-
-  logoutGoogle() {
-    auth.signOut().then(() => {
-      this.setState({
-        user: null
-      });
-    });
+  componentDidMount() {
+    this.props.checkForLoggedInGoogleUser();
   }
 
   handleLogin(event) {
@@ -162,7 +128,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: credentials => dispatch(login(credentials))
+    login: credentials => dispatch(login(credentials)),
+    checkForLoggedInGoogleUser: () => dispatch(checkForLoggedInGoogleUser())
   };
 };
 

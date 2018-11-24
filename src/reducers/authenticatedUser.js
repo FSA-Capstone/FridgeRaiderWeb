@@ -1,3 +1,5 @@
+import firebase, { auth, provider } from '../components/User/firebase.js';
+
 const axios = require('axios');
 
 const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
@@ -5,6 +7,40 @@ const _setAuthenticatedUser = authenticatedUser => ({
   type: SET_AUTHENTICATED_USER,
   authenticatedUser
 });
+
+
+const logoutGoogle = () => {
+  return dispatch => {
+    auth.signOut();
+  };
+};
+
+const checkForLoggedInGoogleUser = () => {
+  return async dispatch => {
+    const result = await firebase.auth().getRedirectResult();
+
+    if (result.user) {
+      //dispatch(_setAuthenticatedUser(result.user));
+      console.log('local user:', this.state.user);
+    }
+
+    if (firebase.auth().currentUser) {
+      const idToken = firebase
+        .auth()
+        .currentUser.getIdToken(/* forceRefresh */ true);
+      console.log(idToken);
+    }
+
+    //todo: send token to backend
+    //create user on backend
+    //set user to store
+
+
+    //axios.post('/firebase', {token: idToken});
+    //.catch(function(error) {
+    //console.log(error);
+  };
+};
 
 const login = credentials => {
   return dispatch => {
@@ -44,6 +80,7 @@ const exchangeTokenForAuth = () => {
 const logout = () => {
   return dispatch => {
     window.localStorage.removeItem('token');
+    dispatch(logoutGoogle());
     dispatch(_setAuthenticatedUser({}));
   };
 };
@@ -57,4 +94,11 @@ const authenticatedUserReducer = (state = {}, action) => {
   }
 };
 
-export { login, logout, exchangeTokenForAuth, authenticatedUserReducer };
+export {
+  logoutGoogle,
+  checkForLoggedInGoogleUser,
+  login,
+  logout,
+  exchangeTokenForAuth,
+  authenticatedUserReducer
+};
