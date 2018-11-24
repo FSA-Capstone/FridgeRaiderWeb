@@ -14,9 +14,8 @@ const _getRecipes = recipes => {
 // thunks
 const getRecipesForIngredients = (ingredients) => {
   return (dispatch) => {
-
     //TO DO: This needs to be changed and ingredients need to be passed (once DB is set)
-    return axios.get(`${process.env.API_URL}/api/recipes`)
+    return axios.get(`${process.env.API_URL}/api/recipes?ingredients=${encodeURI(ingredients.join(','))}`)
       .then(res => res.data)
       .then(recipes => dispatch(_getRecipes(recipes)))
       .catch(error => console.log(error))
