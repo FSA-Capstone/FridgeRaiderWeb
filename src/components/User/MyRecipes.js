@@ -24,18 +24,17 @@ class MyRecipes extends Component {
       <Fragment>
         <Tabs value={value} onChange={handleChange} centered>
           <Tab
-            label={<span style={{ fontSize: 20 }}>My Uploaded Recipies</span>}
+            label={<span style={{ fontSize: 20 }}>Uploaded Recipies</span>}
           />
           <Tab
-            label={<span style={{ fontSize: 20 }}>My Saved Recipies</span>}
+            label={<span style={{ fontSize: 20 }}>Saved Recipies</span>}
           />
           <Tab label={<span style={{ fontSize: 20 }}>New Recipie</span>} />
         </Tabs>
-        <div id="main">
-          {value === 0 && <MyUploadedRecipes />}
-          {value === 1 && <MySavedRecipes />}
-          {value === 2 && <NewRecipe />}
-        </div>
+        {value === 0 && <MyUploadedRecipes />}
+        {value === 1 && <MySavedRecipes />}
+        {value === 2 && <NewRecipe />}
+        <div id="main" />
       </Fragment>
     );
   }
