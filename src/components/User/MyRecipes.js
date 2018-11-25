@@ -24,12 +24,12 @@ class MyRecipes extends Component {
       <Fragment>
         <Tabs value={value} onChange={handleChange} centered>
           <Tab
-            label={<span style={{ fontSize: 20 }}>Uploaded Recipies</span>}
+            label={<span style={{ fontSize: 20 }}>Uploaded Recipes</span>}
           />
           <Tab
-            label={<span style={{ fontSize: 20 }}>Saved Recipies</span>}
+            label={<span style={{ fontSize: 20 }}>Saved Recipes</span>}
           />
-          <Tab label={<span style={{ fontSize: 20 }}>New Recipie</span>} />
+          <Tab label={<span style={{ fontSize: 20 }}>New Recipe</span>} />
         </Tabs>
         {value === 0 && <MyUploadedRecipes />}
         {value === 1 && <MySavedRecipes />}

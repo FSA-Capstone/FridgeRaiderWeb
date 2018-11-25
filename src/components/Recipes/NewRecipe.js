@@ -2,19 +2,38 @@ import React, { Fragment } from 'react';
 import { Typography, InputBase, Button } from '@material-ui/core';
 import { Edit as EditIcon, Search } from '@material-ui/icons';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { connect } from 'react-redux';
+import { createNewRecipe } from '../../store.js';
 
 class NewRecipe extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      ingredients: [],
       name: '',
-      description: '',
+      instructions: '',
+      cuisine: '',
+      category: '',
       ingredientText: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit() {
+    let recipe = {
+      name: this.state.name,
+      instructions: this.state.instructions,
+      cuisineName: this.state.cuisine,
+      categoryName: this.state.category,
+      ingredients: this.state.ingredientText.trim().replace(/,/g, '\n'),
+      postedByUserId: '6364b05d-2361-4fc9-9bee-8bfb0eba1e57'
+    };
+
+    console.log(recipe);
+
+    this.props.createNewRecipe(recipe);
   }
 
   handleChange(e) {
@@ -23,9 +42,15 @@ class NewRecipe extends React.Component {
     });
   }
   render() {
-    const { handleSearch, handleChange } = this;
+    const { handleChange } = this;
 
-    const { name, ingredientText, description, ingredients } = this.state;
+    const {
+      name,
+      instructions,
+      category,
+      cuisine,
+      ingredientText
+    } = this.state;
 
     return (
       <Fragment>
@@ -37,7 +62,8 @@ class NewRecipe extends React.Component {
               marginBottom: '5vh',
               fontWeight: 'bold'
             }}
-          >Add Your Recipes!
+          >
+            Add Your Recipes!
           </Typography>
 
           <InputBase
@@ -57,7 +83,42 @@ class NewRecipe extends React.Component {
 
           <br />
           <InputBase
-            placeholder="Recipe Description"
+            placeholder="Recipe category"
+            style={{
+              backgroundColor: '#fdfdfd',
+              padding: '3px 10px',
+              width: '400px',
+              maxWidth: '80%',
+              border: '1px solid silver',
+              height: '2.35em',
+              margin: '15px 15px'
+            }}
+            onChange={handleChange}
+            value={category}
+            name={'category'}
+          />
+
+          <br />
+
+          <InputBase
+            placeholder="Type of cuisine"
+            style={{
+              backgroundColor: '#fdfdfd',
+              padding: '3px 10px',
+              width: '400px',
+              maxWidth: '80%',
+              border: '1px solid silver',
+              height: '2.35em'
+            }}
+            onChange={handleChange}
+            value={cuisine}
+            name={'cuisine'}
+          />
+
+          <br />
+
+          <InputBase
+            placeholder="Recipe Instructions"
             style={{
               backgroundColor: '#fdfdfd',
               margin: '15px auto 0px auto',
@@ -68,10 +129,10 @@ class NewRecipe extends React.Component {
               height: '6em'
             }}
             onChange={handleChange}
-            value={description}
+            value={instructions}
             multiline={true}
             rows={4}
-            name={'description'}
+            name={'instructions'}
           />
 
           <br />
@@ -102,6 +163,7 @@ class NewRecipe extends React.Component {
             }}
             size="large"
             variant="contained"
+            onClick={this.handleSubmit}
           >
             SUBMIT
             <CloudUploadIcon />
@@ -113,4 +175,13 @@ class NewRecipe extends React.Component {
   }
 }
 
-export default NewRecipe;
+const mapDispatchToProps = dispatch => {
+  return {
+    createNewRecipe: recipe => dispatch(createNewRecipe(recipe))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewRecipe);

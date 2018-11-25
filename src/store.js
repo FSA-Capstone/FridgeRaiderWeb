@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { login, logout, authenticatedUserReducer, exchangeTokenForAuth } from './reducers/authenticatedUser';
-import { recipeReducer, getRecipesForIngredients, getRecipe } from './reducers/recipe';
+import { createNewRecipe, recipeReducer, getRecipesForIngredients, getRecipe } from './reducers/recipe';
 
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
@@ -18,5 +18,6 @@ export {
   logout,
   exchangeTokenForAuth,
   getRecipesForIngredients,
-  getRecipe
+  getRecipe,
+  createNewRecipe
 };
