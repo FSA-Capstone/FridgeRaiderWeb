@@ -58,10 +58,10 @@ class RecipeCard extends React.Component {
 
 const styles = theme => ({
   card: {
-    margin: 25,
+    margin: 0,
     width: 300,
     height: 400,
-    backgroundColor: '#EEEEEE'
+    backgroundColor: '#fff'
   },
   media: {
     height: 0,

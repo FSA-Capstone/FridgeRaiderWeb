@@ -15,23 +15,20 @@ class RecipeDetails extends Component {
 
     return (
       <Fragment>
-        <div className={classes.container}>
-          <div style={{ gridColumnEnd: 'span 6' }}>
-            <img src={recipe.image} />
-          </div>
-          <div style={{ gridColumnEnd: 'span 6' }}>
+        <div id="recipeBack" />
+        <div className="recipeContainer">
+        <h1>{recipe.name}</h1>
+        <div className={"topRecipe"}>
+          <img src={recipe.image} style={{ width: "600px", maxWidth: "70%", padding: "25px" }} />
+          <div style={{ width: "400px" }}>
             <Card className={classes.card}>
-              <CardHeader title={recipe.name} />
               <CardContent>
-                <Typography component="p" variant="subheading" gutterBottom={true} >
-                  Cuisine: {recipe.area}
-                </Typography>
-                <Typography component="p" variant="subheading" gutterBottom={true} >
-                  Category: {recipe.category}
+                <Typography component="p" id="recipeInfo" variant="subheading" gutterBottom={true} >
+                  Cuisine: {recipe.area}  |  Category: {recipe.category}
                 </Typography>
                 <Divider className={classes.divider}/>
                 <Typography component="p" variant="subheading" gutterBottom={true} >
-                  Ingredients: 
+                  <CardHeader title="Ingredients" style={{textAlign: "center"}} />
                 </Typography>
                 {
                   recipe.ingredients.map((ingredient, index) => 
@@ -43,17 +40,19 @@ class RecipeDetails extends Component {
             </Card>
           </div>
         </div>
-        <div className={classes.container}>
-          <div style={{ gridColumnEnd: 'span 12' }}>
-            Instructions:
+        <hr />
+          <div className={classes.container}>
+            <div style={{ gridColumnEnd: 'span 12' }}>
+              Instructions:
+            </div>
+            <div style={{ gridColumnEnd: 'span 12' }}>
+              {recipe.instructions}
+            </div>
           </div>
-          <div style={{ gridColumnEnd: 'span 12' }}>
-            {recipe.instructions}
-          </div>
-        </div>
-        <div className={classes.container}>
-          <div style={{ gridColumnEnd: 'span 12' }}>
-            Reviews....
+          <div className={classes.container}>
+            <div style={{ gridColumnEnd: 'span 12' }}>
+              Reviews....
+            </div>
           </div>
         </div>
       </Fragment>

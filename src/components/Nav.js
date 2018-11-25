@@ -54,11 +54,11 @@ class Nav extends Component {
 
     return (
       <Fragment>
-        <AppBar position="static" style={{backgroundColor: "white"}} >
+        <AppBar position="static" style={{backgroundColor: "white", zIndex: 5, position: "relative", maxHeight: "100px"}} >
           <Toolbar> 
           <div style={{display: "flex", flexGrow: 1, margin: "20px"}}>  
             <Link to="/">
-              <img src="/dist/logo.png" style={{height: "10vh"}} /> 
+              <img src="/dist/logo.png" style={{height: "80%"}} /> 
             </Link>   
           </div>        
           { 
