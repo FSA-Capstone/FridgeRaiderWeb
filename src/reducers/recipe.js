@@ -2,39 +2,72 @@ import axios from 'axios';
 
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
+const ADD_RECIPE = 'ADD_RECIPE';
+
+const _addRecipe = recipe => {
+  return {
+    type: ADD_RECIPE,
+    recipe
+  };
+};
 
 // action creators
 const _getRecipes = recipes => {
   return {
     type: GET_RECIPES,
     recipes
-  }
-}
+  };
+};
 
 // thunks
-const getRecipesForIngredients = (ingredients) => {
-  return (dispatch) => {
+
+const createNewRecipe = recipe => {
+  return dispatch => {
+    return axios
+      .post(`${process.env.API_URL}/api/recipes/`, recipe)
+      .then(response => {
+        console.log(response.data);
+        if (response.data === 'Created') {
+          dispatch(_addRecipe(recipe));
+        }
+        else{
+          console.log('server response indicates recipe not created')
+        }
+      })
+      .catch(error => console.log(error));
+  };
+};
+
+const getRecipesForIngredients = ingredients => {
+  return dispatch => {
     //TO DO: This needs to be changed and ingredients need to be passed (once DB is set)
-    return axios.get(`${process.env.API_URL}/api/recipes?ingredients=${encodeURI(ingredients.join(','))}`)
+    return axios
+      .get(
+        `${process.env.API_URL}/api/recipes?ingredients=${encodeURI(
+          ingredients.join(',')
+        )}`
+      )
       .then(res => res.data)
       .then(recipes => dispatch(_getRecipes(recipes)))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error));
   };
 };
 
 const getRecipe = (id, recipes) => {
-  return recipes.find(recipe => recipe.id === id)
-}
+  return recipes.find(recipe => recipe.id === id);
+};
 
 // reducer
 const recipeReducer = (state = [], action) => {
-
-  switch(action.type) {
+  switch (action.type) {
     case GET_RECIPES:
-      state = action.recipes
+      state = action.recipes;
       break;
+
+    case ADD_RECIPE:
+      return [...state, action.recipe];
   }
   return state;
-}
+};
 
-export { recipeReducer, getRecipesForIngredients, getRecipe }
+export { createNewRecipe, recipeReducer, getRecipesForIngredients, getRecipe };
