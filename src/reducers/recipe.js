@@ -15,7 +15,7 @@ const _getRecipes = recipes => {
 const getRecipesForIngredients = (ingredients) => {
   return (dispatch) => {
     //TO DO: This needs to be changed and ingredients need to be passed (once DB is set)
-    return axios.get(`http://localhost:3000/api/recipes?ingredients=${encodeURI(ingredients.join(','))}`)
+    return axios.get(`${process.env.API_URL}/api/recipes?ingredients=${encodeURI(ingredients.join(','))}`)
       .then(res => res.data)
       .then(recipes => dispatch(_getRecipes(recipes)))
       .catch(error => console.log(error))
