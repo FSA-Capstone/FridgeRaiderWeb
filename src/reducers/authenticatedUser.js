@@ -8,37 +8,53 @@ const _setAuthenticatedUser = authenticatedUser => ({
   authenticatedUser
 });
 
-
 const logoutGoogle = () => {
   return dispatch => {
     auth.signOut();
   };
 };
 
+const registerNewUser = user => {
+  return dispatch => {
+    axios
+      .post(`${process.env.API_URL}/api/users`, user)
+      .then(response => dispatch(_setAuthenticatedUser(response.data)));
+  };
+};
+
 const checkForLoggedInGoogleUser = () => {
   return async dispatch => {
-    const result = await firebase.auth().getRedirectResult();
+    const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
-    if (result.user) {
-      //dispatch(_setAuthenticatedUser(result.user));
-      console.log('local user:', this.state.user);
+    if (firebaseRedirectResult.user) {
+      console.log('local user:', firebaseRedirectResult.user);
+
+      var idToken = await firebase.auth().currentUser.getIdToken(true);
+
+      const response = await axios.post(
+        `${process.env.API_URL}/api/users/firebase-auth/
+        `,
+        { idToken }
+      );
+
+      if (response.data.name) {
+        dispatch(_setAuthenticatedUser(response.data));
+      } else {
+        const newUser = {
+          name: firebaseRedirectResult.user.displayName,
+          email: firebaseRedirectResult.user.email,
+          password: firebaseRedirectResult.user.uid,
+          userName: firebaseRedirectResult.user.email
+        };
+
+        let newUserResponse = await axios.post(
+          `${process.env.API_URL}/api/users`,
+          newUser
+        );
+
+        dispatch(_setAuthenticatedUser(newUserResponse.data));
+      }
     }
-
-    if (firebase.auth().currentUser) {
-      const idToken = firebase
-        .auth()
-        .currentUser.getIdToken(/* forceRefresh */ true);
-      console.log(idToken);
-    }
-
-    //todo: send token to backend
-    //create user on backend
-    //set user to store
-
-
-    //axios.post('/firebase', {token: idToken});
-    //.catch(function(error) {
-    //console.log(error);
   };
 };
 
@@ -96,6 +112,7 @@ const authenticatedUserReducer = (state = {}, action) => {
 
 export {
   logoutGoogle,
+  registerNewUser,
   checkForLoggedInGoogleUser,
   login,
   logout,
