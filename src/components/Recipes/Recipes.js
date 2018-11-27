@@ -107,12 +107,11 @@ class Recipes extends Component {
     const typeCheck = anyEnabled(mealTypes)
     let recipes = this.props.recipes
     if(cuisineCheck) {
-      recipes = recipes.filter((recipe) => cuisines[recipe.area]);
+      recipes = recipes.filter((recipe) => cuisines[recipe.cuisine[0].properties.name]);
     }
     if(typeCheck) {
-      recipes = recipes.filter((recipe) => mealTypes[recipe.category]).slice(0, 24)
+      recipes = recipes.filter((recipe) => mealTypes[recipe.category[0].properties.name]).slice(0, 24)
     }
-		console.log(recipes[0]);
 		this.setState({
 			recipes
 		});
@@ -121,6 +120,7 @@ class Recipes extends Component {
 	render() {
 		const { expandCuisines, handleCuisines, expandTypes, handleTypes } = this;
     const { expanded, cuisines, recipes, mealTypes } = this.state;
+		console.log(recipes[0]);
 		return (
 			<div className="reults" style={{ width: '99.9%' }}>
 				<List
