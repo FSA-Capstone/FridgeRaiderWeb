@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Grid, Button, TextField, Typography } from '@material-ui/core';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { checkForLoggedInGoogleUser, login } from '../../store';
-import { auth, provider } from './firebase.js';
+import { auth, provider } from './Firebase.js';
 
 class Login extends Component {
   constructor() {
