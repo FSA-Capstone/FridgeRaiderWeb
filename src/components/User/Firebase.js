@@ -1,8 +1,11 @@
 import firebase from 'firebase';
-import keys from '../../../env.js';
+import  {firebaseApiKey}  from '../../../config.js';
+
+console.log(firebaseApiKey)
+
 
 let config = {
-  apiKey: keys.firebaseApiKey,
+  apiKey: firebaseApiKey,
   authDomain: 'fridgeraider-d65aa.firebaseapp.com',
   projectId: 'fridgeraider-d65aa'
 };
