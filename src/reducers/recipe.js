@@ -24,17 +24,8 @@ const _getRecipes = recipes => {
 const createNewRecipe = recipe => {
   return dispatch => {
     return axios
-      .post(`${process.env.API_URL}/api/recipes/`, recipe)
-      .then(response => {
-        console.log(response.data);
-        if (response.data === 'Created') {
-          dispatch(_addRecipe(recipe));
-        }
-        else{
-          console.log('server response indicates recipe not created')
-        }
-      })
-      .catch(error => console.log(error));
+      .post('http://localhost:3000/api/recipes/', recipe)
+      .then(response => dispatch(_addRecipe(response.data)))
   };
 };
 
