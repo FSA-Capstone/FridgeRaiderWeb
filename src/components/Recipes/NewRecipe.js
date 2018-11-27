@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { createNewRecipe } from '../../store.js';
 
 class NewRecipe extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       name: '',
@@ -22,13 +22,20 @@ class NewRecipe extends React.Component {
   }
 
   handleSubmit() {
+    console.log(this.props.authenticatedUser);
+
+    if (!this.props.authenticatedUser.id) {
+      console.log('no authenticated user');
+      return;
+    }
+
     let recipe = {
       name: this.state.name,
       instructions: this.state.instructions,
       cuisineName: this.state.cuisine,
       categoryName: this.state.category,
       ingredients: this.state.ingredientText.trim().replace(/,/g, '\n'),
-      postedByUserId: '6364b05d-2361-4fc9-9bee-8bfb0eba1e57'
+      postedByUserId: this.props.authenticatedUser.id
     };
 
     console.log(recipe);
@@ -181,7 +188,13 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  return {
+    authenticatedUser: state.authenticatedUser
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewRecipe);

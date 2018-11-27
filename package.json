@@ -40,7 +40,7 @@
     "test": "mocha test/*.spec.js",
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-     "start:dev": "npm run webpack -- --watch --mode=development & nodemon server.js --ignore src/ --ignore dist"
+    "start:dev": "npm run webpack -- --watch --mode=development & nodemon server.js --ignore src/ --ignore dist"
   },
   "contributors": [
     "David Acconcio <dacconcio@gmail.com>",

@@ -23,6 +23,7 @@ const _getRecipes = recipes => {
 
 const createNewRecipe = recipe => {
   return dispatch => {
+    console.log(recipe)
     return axios
       .post('http://localhost:3000/api/recipes/', recipe)
       .then(response => dispatch(_addRecipe(response.data)))
