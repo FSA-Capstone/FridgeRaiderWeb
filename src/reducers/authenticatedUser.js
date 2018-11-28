@@ -110,6 +110,7 @@ const authenticatedUserReducer = (state = {}, action) => {
   }
 };
 
+
 export {
   logoutGoogle,
   registerNewUser,
