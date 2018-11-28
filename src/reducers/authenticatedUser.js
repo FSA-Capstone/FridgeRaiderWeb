@@ -1,4 +1,4 @@
-import firebase, { auth, provider } from '../components/User/firebase.js';
+import firebase, { auth, provider } from '../components/User/firebaseComponent.js';
 
 const axios = require('axios');
 
