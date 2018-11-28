@@ -29,16 +29,16 @@ class RecipeCard extends React.Component {
         <Link to={`/recipes/${recipe.id}`}>
           <CardMedia
             className={classes.media}
-            image={recipe.image}
+            image={recipe.imageUrl}
             title={recipe.name}
           />
         </Link>
         <CardContent>
           <Typography component="p">
-            Cuisine: {recipe.area}
+            Cuisine: {recipe.cuisine ? recipe.cuisine[0].properties.name : "None"}
           </Typography>
           <Typography component="p">
-            Category: {recipe.category}
+            Category: {recipe.category ? recipe.category[0].properties.name : "None"}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
@@ -58,9 +58,10 @@ class RecipeCard extends React.Component {
 
 const styles = theme => ({
   card: {
-    margin: 25,
-    maxWidth: 400,
-    backgroundColor: '#EEEEEE'
+    margin: 0,
+    width: 300,
+    height: 400,
+    backgroundColor: '#fff'
   },
   media: {
     height: 0,
