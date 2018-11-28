@@ -31,7 +31,7 @@ class App extends Component {
             <Route path="/login" render={({ history }) => <Login history={history} />} />
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
-            <Route path="/recipes/:id" render={({ match }) => <RecipeDetails id={parseInt(match.params.id)} /> } />
+            <Route path="/recipes/:id" render={({ match }) => <RecipeDetails id={match.params.id} /> } />
             <Route path="/recipes" component={Recipes} />
             <Route exact path="/" component={Home} />
             <Route exact path="/myaccount" component={MyAccount} />

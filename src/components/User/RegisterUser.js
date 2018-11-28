@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Grid, Button, TextField, Typography, Paper } from '@material-ui/core';
-/* TO DO (when DB is ready)
-import { addUser } from '../store';
-*/
+import { registerNewUser } from '../../store';
 
 class RegisterUser extends Component {
   constructor() {
@@ -29,15 +27,13 @@ class RegisterUser extends Component {
   handleRegistration(event) {
     const { name, userName, password, email } = this.state;
     event.preventDefault();
-    /* TO DO (when DB is ready)
     this.props
-      .addUser({ name, userName, password, email, address })
-      .then(() => this.props.history.push('/registerSuccess'))
+      .registerNewUser({ name, userName, password, email })
+      .then(() => this.props.history.push('/'))
       .catch(error => {
         console.log(error.errors);
         this.setState({ error: error.message });
       });
-    */
   }
 
   render() {
@@ -150,9 +146,7 @@ class RegisterUser extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    /*TO DO (when DB is ready)
-    addUser: user => dispatch(addUser(user)),
-    */
+    registerNewUser: user => dispatch(registerNewUser(user)),
   };
 };
 
