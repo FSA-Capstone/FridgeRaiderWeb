@@ -7,11 +7,28 @@ import { getRecipe } from '../../store';
 class RecipeDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      recipe: {}
+    }
+  }
+
+  componentDidMount() {
+    this.props.getRecipe(this.props.id)
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.recipe !== this.props.recipe) {
+      this.setState({
+        recipe: this.props.recipe
+      })
+    }
   }
 
   render() {
-    const { classes, recipe } = this.props;
-    if(!recipe) return null;
+    const { classes } = this.props;
+    const { recipe } = this.state
+    console.log(recipe)
+    if(!recipe.id) return null;
 
     return (
       <Fragment>
@@ -19,21 +36,21 @@ class RecipeDetails extends Component {
         <div className="recipeContainer">
         <h1>{recipe.name}</h1>
         <div className={"topRecipe"}>
-          <img src={recipe.image} style={{ width: "600px", maxWidth: "70%", padding: "25px" }} />
+          <img src={recipe.imageUrl} style={{ width: "600px", maxWidth: "70%", height: "auto", alignSelf: "start", padding: "25px" }} />
           <div style={{ width: "400px" }}>
             <Card className={classes.card}>
               <CardContent>
                 <Typography component="p" id="recipeInfo" variant="subheading" gutterBottom={true} >
-                  Cuisine: {recipe.area}  |  Category: {recipe.category}
+                  Cuisine: {recipe.cuisine[0].properties.name}  |  Category: {recipe.category[0].properties.name}
                 </Typography>
                 <Divider className={classes.divider}/>
-                <Typography component="p" variant="subheading" gutterBottom={true} >
+                <Typography component="div" variant="subheading" gutterBottom={true} >
                   <CardHeader title="Ingredients" style={{textAlign: "center"}} />
                 </Typography>
                 {
                   recipe.ingredients.map((ingredient, index) => 
                     <Typography key={index} component="p" variant="subheading" gutterBottom={true} >
-                      {`${ingredient.measure} ${ingredient.name}`}
+                      {`${ingredient.relation.measure} ${ingredient.properties.name}`}
                     </Typography> )
                 }
               </CardContent>
@@ -72,14 +89,22 @@ const styles = theme => ({
   }
 });
 
-const mapStateToProps = ({ recipes }, { id }) => {
+const mapStateToProps = ({recipes},{ id }) => {
+  const recipe = recipes.filter( recipe => recipe.id === id).pop()
   return {
-    recipe: getRecipe(id, recipes)
+    recipe,
+    id
   };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRecipe: (id) => dispatch(getRecipe(id))
+  }
+}
 
 RecipeDetails.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(RecipeDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RecipeDetails));
