@@ -1,8 +1,12 @@
-import firebase, { auth, provider } from '../components/User/FirebaseComponent.js';
+import firebase, {
+  auth,
+  provider
+} from '../components/User/FirebaseComponent.js';
 
 const axios = require('axios');
 
 const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
+
 const _setAuthenticatedUser = authenticatedUser => ({
   type: SET_AUTHENTICATED_USER,
   authenticatedUser
@@ -22,13 +26,17 @@ const registerNewUser = user => {
   };
 };
 
-const checkForLoggedInGoogleUser = () => {
+const setAuthenticatedUserOnRefresh = user => {
+  return dispatch => {
+    dispatch(_setAuthenticatedUser(user));
+  };
+};
+
+const checkForLoggedInGoogleUser = user => {
   return async dispatch => {
     const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
-    if (firebaseRedirectResult.user) {
-      console.log('local user:', firebaseRedirectResult.user);
-
+    if (firebaseRedirectResult.user || user.refreshToken) {
       var idToken = await firebase.auth().currentUser.getIdToken(true);
 
       const response = await axios.post(
@@ -109,7 +117,6 @@ const authenticatedUserReducer = (state = {}, action) => {
       return state;
   }
 };
-
 
 export {
   logoutGoogle,
