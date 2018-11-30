@@ -39,6 +39,7 @@ class RecipeDetails extends Component {
   }
 
   postReview(e) {
+    console.log('Clicked!')
     e.preventDefault()
     let valid = true
     if(isNaN(this.state.rating) || this.state.rating === null) {
@@ -118,8 +119,8 @@ class RecipeDetails extends Component {
         <div className={classes.container}>
           <div style={{ gridColumnEnd: 'span 12' }}>
             <h2 className="reviewHead">Reviews</h2>
-              {this.props.authenticatedUser.id ?
-              <form onSubmit={() => postReview()}>
+              {!this.props.authenticatedUser.id ?
+              <form onSubmit={postReview}>
                 <TextField
                   id="rating"
                   name="rating"
@@ -173,7 +174,7 @@ class RecipeDetails extends Component {
                     /> : 
                     null
                 }
-                <Button variant="contained" aria-label="Submit">
+                <Button variant="contained" aria-label="Submit" >
                   Submit
                 </Button>
               </form>
