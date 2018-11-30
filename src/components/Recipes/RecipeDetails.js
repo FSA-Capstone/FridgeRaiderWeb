@@ -38,11 +38,10 @@ class RecipeDetails extends Component {
     })
   }
 
-  postReview(e) {
-    console.log('Clicked!')
-    e.preventDefault()
+  postReview() {
     let valid = true
-    if(isNaN(this.state.rating) || this.state.rating === null) {
+    if(isNaN(this.state.rating) || this.state.rating === null || this.state.rating === '') {
+      console.log('rating!!!!')
       valid = false;
       this.setState({
         warningRating: true
@@ -52,7 +51,8 @@ class RecipeDetails extends Component {
         warningRating: false
       })
     }
-    if(isNaN(this.state.description) || this.state.description === null) {
+    if(this.state.description === null || this.state.description === '') {
+      console.log(`description!!!!  ${this.state.description}`)
       valid = false;
       this.setState({
         warningDescription: true
@@ -67,7 +67,8 @@ class RecipeDetails extends Component {
       description: this.state.description
     }
     if(valid) {
-      this.props.postReview( this.state.recipe.id, this.props.authenticatedUser.id, this.props.history )
+      console.log('done!!!!')
+      this.props.postReview( this.state.recipe.id, this.props.authenticatedUser.id, review )
     }
   }
 
@@ -76,7 +77,6 @@ class RecipeDetails extends Component {
     const { recipe, rating, description, warningDescription, warningRating } = this.state
     const { handleChange, postReview } = this
     const ratings = [1, 2, 3, 4, 5]
-    console.log(recipe)
     if(!recipe.id) return null;
 
     return (
@@ -116,11 +116,12 @@ class RecipeDetails extends Component {
             </div>
           </div>
         </div>
-        <div className={classes.container}>
+        <div className="reviewBlock">
           <div style={{ gridColumnEnd: 'span 12' }}>
             <h2 className="reviewHead">Reviews</h2>
-              {!this.props.authenticatedUser.id ?
-              <form onSubmit={postReview}>
+              {this.props.authenticatedUser.id ?
+              <form onSubmit={postReview} style={{ textAlign: "center", border: ".5px solid #666", padding: "25px", backgroundColor: "#f9f9f9", margin: 0}}>
+                Rating:<br />
                 <TextField
                   id="rating"
                   name="rating"
@@ -144,37 +145,22 @@ class RecipeDetails extends Component {
                     </MenuItem>
                   ))}
                 </TextField>
-                {
-                  warningRating ? 
-                    <MySnackbarContentWrapper
-                      variant="error"
-                      className={margin}
-                      value={description}
-                      message="Please rate the recipe!"
-                    /> : 
-                    null
-                }
+                <br />
                 <TextField
                   id="description"
                   name="description"
-                  label="Multiline Placeholder"
+                  label="Review the recipe"
                   placeholder="Placeholder"
                   onChange={handleChange}
+                  value={description}
                   multiline
                   className="textFieldLarge"
                   margin="normal"
                   variant="outlined"
+                  style={{ width: "1000px", maxWidth: "80%"}}
                 />
-                {
-                  warningDescription ? 
-                    <MySnackbarContentWrapper
-                      variant="error"
-                      className={classes.margin}
-                      message="Please write a review!"
-                    /> : 
-                    null
-                }
-                <Button variant="contained" aria-label="Submit" >
+                <br />
+                <Button variant="contained" aria-label="Submit" onClick={postReview}>
                   Submit
                 </Button>
               </form>
@@ -229,7 +215,7 @@ const mapStateToProps = ({recipes, authenticatedUser},{ id }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getRecipe: (id) => dispatch(getRecipe(id)),
-    postReview: (recipeId, userId, review) => dispatch(postReview(id))
+    postReview: (recipeId, userId, review) => dispatch(postReview(recipeId, userId, review))
   }
 }
 

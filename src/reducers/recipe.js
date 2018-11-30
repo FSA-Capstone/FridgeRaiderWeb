@@ -3,6 +3,7 @@ import axios from 'axios';
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
 const ADD_RECIPE = 'ADD_RECIPE';
+const GET_RECIPE = 'GET_RECIPE';
 
 const _addRecipe = (recipe) => {
 	return {
@@ -11,7 +12,6 @@ const _addRecipe = (recipe) => {
 	};
 };
 
-const GET_RECIPE = 'GET_RECIPE';
 
 // action creators
 const _getRecipes = (recipes) => {
@@ -71,18 +71,20 @@ const postReview = (recipeId, userId, review) => {
 
 // reducer
 const recipeReducer = (state = [], action) => {
-	switch (action.type) {
-		case GET_RECIPES:
-			state = action.recipes;
-			break;
+  switch (action.type) {
+    case ADD_RECIPE:
+      return [...state, action.recipe];
+    case GET_RECIPES:
+      state = action.recipes;
+      break;
 
-		case GET_RECIPE:
-			const newState = state.filter((recipe) => recipe.id !== action.recipe.id);
-			newState.push(action.recipe);
-			state = newState;
-			break;
-	}
-	return state;
+    case GET_RECIPE:
+      const newState = state.filter(recipe => recipe.id !== action.recipe.id);
+      newState.push(action.recipe);
+      state = newState;
+      break;
+  }
+  return state;
 };
 
 export { createNewRecipe, recipeReducer, getRecipesForIngredients, getRecipe, postReview };
