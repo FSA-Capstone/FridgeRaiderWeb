@@ -130,89 +130,11 @@ class MySavedRecipes extends Component {
     const { expanded, cuisines, recipes, mealTypes } = this.state;
     return (
       <div className="reults" style={{ width: '99.9%' }}>
-        <List
-          component="nav"
-          subheader={
-            <ListSubheader
-              disableSticky={true}
-              style={{
-                textAlign: 'center',
-                fontSize: '1.2em',
-                margin: '25px 0 50px 0'
-              }}
-              component="div"
-            >
-              Filter Recipes
-            </ListSubheader>
-          }
-          style={{
-            width: '250px',
-            height: '100vh',
-            position: 'fixed',
-            top: 0,
-            display: 'inline-block',
-            borderRight: '.5px solid #666',
-            boxShadow:
-              '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
-          }}
-        >
-          <div
-            id="navSide"
-            style={{
-              height: 'calc(100% - 100px)',
-              width: '248px',
-              top: '100px',
-              position: 'fixed',
-              overflow: 'auto'
-            }}
-          >
-            <ListItem
-              button
-              onClick={expandTypes}
-              style={{ backgroundColor: '#f0f0f0' }}
-            >
-              <ListItemText inset primary="Meal Type" />
-              {expanded.types ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={expanded.types} timeout="auto" unmountOnExit>
-              <FormControl component="fieldset">
-                <FormGroup>
-                  {Object.keys(mealTypes).map(key => (
-                    <FormControlLabel
-                      key={key}
-                      control={
-                        <Switch
-                          name={key}
-                          color="primary"
-                          checked={mealTypes[key]}
-                          onChange={handleTypes}
-                          value={mealTypes[key] ? false : true}
-                        />
-                      }
-                      label={key}
-                      style={{ marginLeft: '35px' }}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </Collapse>
-            <ListItem
-              button
-              onClick={expandCuisines}
-              style={{ backgroundColor: '#f0f0f0' }}
-            >
-              <ListItemText inset primary="Cuisines" />
-              {expanded.cuisines ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-      
-          </div>
-        </List>
         <GridList
           id="resultsMain"
           style={{
             justifyContent: 'space-around',
             float: 'right',
-            width: 'calc(100% - 250px)',
             paddingTop: '50px'
           }}
         >

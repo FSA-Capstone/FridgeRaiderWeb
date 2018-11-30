@@ -22,8 +22,6 @@ class NewRecipe extends React.Component {
   }
 
   handleSubmit() {
-    console.log(this.props.authenticatedUser);
-
     if (!this.props.authenticatedUser.id) {
       console.log('no authenticated user');
       return;
