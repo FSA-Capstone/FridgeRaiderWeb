@@ -122,10 +122,16 @@ class Home extends Component {
 	}
 }
 
+const mapStateToProps = ({ingredients}) => {
+	return {
+		allIngredients: ingredients.allIngredients
+	};
+};
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setIngredients: (ingredients, history) => dispatch(setIngredients(ingredients, history))
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

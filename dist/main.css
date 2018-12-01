@@ -173,8 +173,8 @@ li button:focus {
   display: none;
   width: 95%;
   font-size: 1.2em;
-  top: 70px;
-  position: absolute;
+  margin-top: -165px;
+  position: relative;
   left: 50%;
   transform: translate(-50%,0%);
   color: whitesmoke;
@@ -185,8 +185,8 @@ li button:focus {
   display: none;
   width: 70%;
   height: 130px;
-  top: 100px;
-  position: absolute;
+  margin-top: -135px;
+  position: relative;
   left: 50%;
   transform: translate(-50%,0%);
   color: whitesmoke;
@@ -221,4 +221,13 @@ li button:focus {
 }
 a.recipeLink:hover span {
   display: inline-block;
+}
+.chip {
+  margin: 8px 12px;
+}
+.ingSearch {
+  border: .5px solid #3f51b5;
+  padding: 1px 5px;
+  margin-top: 25px;
+  border-radius: 20px;
 }
