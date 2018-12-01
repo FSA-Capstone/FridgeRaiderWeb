@@ -12,6 +12,14 @@ import {
   MenuItem
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { logout } from '../store.js';
+
+const styles = {
+  largeIcon: {
+    width: 60,
+    height: 60
+  }
+};
 
 class Nav extends Component {
   constructor(props) {
@@ -52,7 +60,7 @@ class Nav extends Component {
             aria-owns={isOpen ? 'profile-menu' : null}
             aria-haspopup="true"
           >
-            <AccountCircleIcon />
+            <AccountCircleIcon className="svg_icons" />
           </IconButton>
           <Menu
             id="profile-menu"
@@ -111,6 +119,12 @@ class Nav extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(logout())
+  };
+};
+
 const mapStateToProps = ({ authenticatedUser }) => {
   return {
     authenticatedUser
@@ -119,4 +133,5 @@ const mapStateToProps = ({ authenticatedUser }) => {
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Nav);

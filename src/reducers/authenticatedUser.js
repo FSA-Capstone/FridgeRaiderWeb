@@ -36,7 +36,7 @@ const checkForLoggedInGoogleUser = user => {
   return async dispatch => {
     const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
-    if (firebaseRedirectResult.user || user.refreshToken) {
+    if (firebaseRedirectResult.user || (user && user.name)) {
       var idToken = await firebase.auth().currentUser.getIdToken(true);
 
       const response = await axios.post(

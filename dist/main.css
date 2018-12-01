@@ -10,6 +10,9 @@ h1 {
   margin: 80px auto 80px auto;
   text-align: center;
 }
+.svg_icons{
+  transform: scale(2);
+}
 .topRecipe {
   display: flex;
   justify-content: space-around;
@@ -138,6 +141,7 @@ li button:focus {
   text-align: center;
   color: #666;
 }
+
 .reviewBlock {
   padding: 90px;
   border-radius: 0 0 60px 60px;
@@ -156,3 +160,4 @@ li button:focus {
   border: .5px solid #666;
   padding: 10px 60px;
 }
+
