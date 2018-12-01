@@ -16,7 +16,8 @@ import {
   authenticatedUserReducer,
   setAuthenticatedUserOnRefresh,
   exchangeTokenForAuth,
-  registerNewUser
+  registerNewUser,
+  saveRecipe
 } from './reducers/authenticatedUser';
 import { getCategories, categoryReducer } from './reducers/category';
 import { cuisineReducer } from './reducers/cuisine';
@@ -39,6 +40,7 @@ export {
   logout,
   checkForLoggedInGoogleUser,
   registerNewUser,
+  saveRecipe,
   getCategories,
   exchangeTokenForAuth,
   getRecipesForIngredients,

@@ -12,6 +12,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { saveRecipe } from '../../store.js';
+import { connect } from 'react-redux';
 
 class RecipeCard extends React.Component {
   state = { expanded: false };
@@ -20,35 +22,57 @@ class RecipeCard extends React.Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  saveRecipe(recipe) {
+    this.props.saveRecipe(recipe, this.props.authenticatedUser.id);
+  }
+
   render() {
     const { classes, recipe, userIngredients } = this.props;
     return (
       <Card className={classes.card}>
         <CardHeader title={recipe.name} />
         <Link to={`/recipes/${recipe.id}`} className="recipeLink">
-            <CardMedia
-              className={classes.media}
-              image={recipe.imageUrl}
-              title={recipe.name}
-            />
-            <span className="blackOut"></span>
-            <span className="missingHeader">You're Missing <span class="badge">{recipe.ingredients ? recipe.ingredients.filter( ingredient => userIngredients.indexOf(ingredient) === -1).length : 0}</span> Ingredients:</span>
-            <span className="missingList">{ recipe.ingredients ? recipe.ingredients.filter( ingredient => userIngredients.indexOf(ingredient) === -1).join('\n') : ''}</span>
+          <CardMedia
+            className={classes.media}
+            image={recipe.imageUrl}
+            title={recipe.name}
+          />
+          <span className="blackOut" />
+          <span className="missingHeader">
+            You're Missing{' '}
+            <span className="badge">
+              {recipe.ingredients
+                ? recipe.ingredients.filter(
+                    ingredient => userIngredients.indexOf(ingredient) === -1
+                  ).length
+                : 0}
+            </span>{' '}
+            Ingredients:
+          </span>
+          <span className="missingList">
+            {recipe.ingredients
+              ? recipe.ingredients
+                  .filter(
+                    ingredient => userIngredients.indexOf(ingredient) === -1
+                  )
+                  .join('\n')
+              : ''}
+          </span>
         </Link>
         <CardContent>
           <Typography component="p">
-            Cuisine:{' '}
-            {recipe.cuisine ? recipe.cuisine : 'None'}
+            Cuisine: {recipe.cuisine ? recipe.cuisine : 'None'}
           </Typography>
           <Typography component="p">
-            Category:{' '}
-            {recipe.category ? recipe.category : 'None'}
+            Category: {recipe.category ? recipe.category : 'None'}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to wish list">
-            <FavoriteIcon />
-          </IconButton>
+          <div onClick={() => this.saveRecipe(recipe)}>
+            <IconButton aria-label="Add to wish list">
+              <FavoriteIcon />
+            </IconButton>
+          </div>
           <Link to={`/recipes/${recipe.id}`}>
             <Button variant="contained" color="primary">
               View Recipe
@@ -80,4 +104,19 @@ RecipeCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(RecipeCard);
+const mapStateToProps = state => {
+  return {
+    authenticatedUser: state.authenticatedUser
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveRecipe: (recipeId, userId) => dispatch(saveRecipe(recipeId, userId))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(RecipeCard));

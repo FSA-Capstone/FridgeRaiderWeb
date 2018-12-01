@@ -12,6 +12,20 @@ const _setAuthenticatedUser = authenticatedUser => ({
   authenticatedUser
 });
 
+const saveRecipe = (recipe, userId) => {
+  return (dispatch, getState) => {
+    return axios
+      .put(`${process.env.API_URL}/api/users/${userId}/saveRecipe/${recipe.id}`)
+      .then(() => {
+        const updatedUser = getState().authenticatedUser;
+
+        updatedUser.savedRecipes.push(recipe);
+
+        dispatch(_setAuthenticatedUser(updatedUser));
+      });
+  };
+};
+
 const logoutGoogle = () => {
   return dispatch => {
     auth.signOut();
@@ -36,7 +50,7 @@ const checkForLoggedInGoogleUser = user => {
   return async dispatch => {
     const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
-    if (firebaseRedirectResult.user || (user && user.email)) {
+    if (firebaseRedirectResult.user || user.email) {
       var idToken = await firebase.auth().currentUser.getIdToken(true);
 
       const response = await axios.post(
@@ -48,16 +62,20 @@ const checkForLoggedInGoogleUser = user => {
       if (response.data.name) {
         dispatch(_setAuthenticatedUser(response.data));
       } else {
+        let finalUser;
+        if (firebaseRedirectResult.user) {
+          finalUser = firebaseRedirectResult.user;
+        } else {
+          finalUser = user;
+        }
+
         const newUser = {
-          name: firebaseRedirectResult.user.displayName,
-          email: firebaseRedirectResult.user.email,
-          password: firebaseRedirectResult.user.uid,
-          userName: firebaseRedirectResult.user.email,
+          name: finalUser.displayName,
+          email: finalUser.email,
+          password: finalUser.uid,
+          userName: finalUser.email,
           isAdmin: false
         };
-
-        console.log(newUser)
-
 
         let newUserResponse = await axios.post(
           `${process.env.API_URL}/api/users`,
@@ -69,7 +87,6 @@ const checkForLoggedInGoogleUser = user => {
     }
   };
 };
-
 const login = credentials => {
   return dispatch => {
     return axios
@@ -128,6 +145,7 @@ export {
   checkForLoggedInGoogleUser,
   login,
   logout,
+  saveRecipe,
   exchangeTokenForAuth,
   setAuthenticatedUser,
   authenticatedUserReducer

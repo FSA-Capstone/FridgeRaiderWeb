@@ -6,6 +6,7 @@ const GET_RECIPES = 'GET_RECIPES';
 const ADD_RECIPE = 'ADD_RECIPE';
 const GET_RECIPE = 'GET_RECIPE';
 
+// action creators
 const _addRecipe = recipe => {
   return {
     type: ADD_RECIPE,
@@ -13,7 +14,6 @@ const _addRecipe = recipe => {
   };
 };
 
-// action creators
 const _getRecipes = recipes => {
   return {
     type: GET_RECIPES,
@@ -29,6 +29,9 @@ const _getRecipe = recipe => {
 };
 
 // thunks
+
+
+
 
 const createNewRecipe = recipe => {
   return (dispatch, getState) => {
