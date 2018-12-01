@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import { recipeReducer, createNewRecipe, getRecipesForIngredients, getRecipe, postReview } from './reducers/recipe';
 import { login, checkForLoggedInGoogleUser, logout, authenticatedUserReducer,setAuthenticatedUserOnRefresh, exchangeTokenForAuth, registerNewUser } from './reducers/authenticatedUser';
-import { recipeReducer, createNewRecipe, getRecipesForIngredients, getRecipe } from './reducers/recipe';
-
 
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
@@ -22,5 +21,6 @@ export {
   exchangeTokenForAuth,
   getRecipesForIngredients,
   getRecipe,
+  postReview,
   createNewRecipe
 };
