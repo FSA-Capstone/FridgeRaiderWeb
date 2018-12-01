@@ -17,7 +17,7 @@ import {
   exchangeTokenForAuth,
   registerNewUser
 } from './reducers/authenticatedUser';
-import { getCategories, categoryReducer } from './reducers/category.js';
+import { getCategories, categoryReducer } from './reducers/category';
 
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
