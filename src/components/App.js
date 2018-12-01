@@ -13,12 +13,17 @@ import Recipes from './Recipes/Recipes';
 import RecipeDetails from './Recipes/RecipeDetails';
 import MyAccount from './User/MyAccount';
 import MyRecipes from './User/MyRecipes';
-
+import { auth } from './User/FirebaseComponent.js';
+import { checkForLoggedInGoogleUser, logout } from '../store';
 
 class App extends Component {
-
   componentDidMount() {
     this.props.exchangeTokenForAuth();
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.props.checkForLoggedInGoogleUser(user);
+      }
+    });
   }
 
   render() {
@@ -28,10 +33,16 @@ class App extends Component {
           <CssBaseline />
           <Route path="/" render={({ history }) => <Nav history={history} />} />
           <Switch>
-            <Route path="/login" render={({ history }) => <Login history={history} />} />
+            <Route
+              path="/login"
+              render={({ history }) => <Login history={history} />}
+            />
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
-            <Route path="/recipes/:id" render={({ match }) => <RecipeDetails id={match.params.id} /> } />
+            <Route
+              path="/recipes/:id"
+              render={({ match }) => <RecipeDetails id={match.params.id} />}
+            />
             <Route path="/recipes" component={Recipes} />
             <Route exact path="/" component={Home} />
             <Route exact path="/myaccount" component={MyAccount} />
@@ -44,17 +55,22 @@ class App extends Component {
 }
 
 const styles = {
-  "@global": {
+  '@global': {
     body: {
-      backgroundColor: "white"
+      backgroundColor: 'white'
     }
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    exchangeTokenForAuth: () => dispatch(exchangeTokenForAuth())
   }
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(App))
+const mapDispatchToProps = dispatch => {
+  return {
+    exchangeTokenForAuth: () => dispatch(exchangeTokenForAuth()),
+    logout: () => dispatch(logout()),
+    checkForLoggedInGoogleUser: user => dispatch(checkForLoggedInGoogleUser(user))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles)(App));

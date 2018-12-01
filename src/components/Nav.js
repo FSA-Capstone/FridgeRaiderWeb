@@ -12,11 +12,6 @@ import {
   MenuItem
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {
-  checkForLoggedInGoogleUser,
-  logout
-} from '../store';
-import { auth } from './User/FirebaseComponent.js';
 
 class Nav extends Component {
   constructor(props) {
@@ -31,14 +26,6 @@ class Nav extends Component {
 
   handleProfileMenu(event) {
     this.setState({ anchorEl: event.currentTarget });
-  }
-
-  componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.props.checkForLoggedInGoogleUser(user);
-      }
-    });
   }
 
   handleProfileMenuClose() {
@@ -130,14 +117,6 @@ const mapStateToProps = ({ authenticatedUser }) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logout: () => dispatch(logout()),
-    checkForLoggedInGoogleUser: user => dispatch(checkForLoggedInGoogleUser(user))
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(Nav);

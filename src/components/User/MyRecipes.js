@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Tabs, Tab } from '@material-ui/core';
-import MyUploadedRecipes from './MyUploadedRecipes';
-import MySavedRecipes from './MySavedRecipes';
+import MySavedOrUploadedRecipes from './MySavedOrUploadedRecipes';
 import NewRecipe from '../Recipes/NewRecipe';
+import { connect } from 'react-redux';
 
 class MyRecipes extends Component {
   constructor() {
@@ -23,20 +23,31 @@ class MyRecipes extends Component {
     return (
       <Fragment>
         <Tabs value={value} onChange={handleChange} centered>
-          <Tab
-            label={<span style={{ fontSize: 20 }}>Uploaded Recipes</span>}
-          />
-          <Tab
-            label={<span style={{ fontSize: 20 }}>Saved Recipes</span>}
-          />
+          <Tab label={<span style={{ fontSize: 20 }}>Uploaded Recipes</span>} />
+          <Tab label={<span style={{ fontSize: 20 }}>Saved Recipes</span>} />
           <Tab label={<span style={{ fontSize: 20 }}>New Recipe</span>} />
         </Tabs>
-        {value === 0 && <MyUploadedRecipes />}
-        {value === 1 && <MySavedRecipes />}
+        {value === 0 && (
+          <MySavedOrUploadedRecipes recipes={this.props.postedRecipes} />
+        )}
+        {value === 1 && <MySavedOrUploadedRecipes recipes={[]} />}
         {value === 2 && <NewRecipe />}
-        <div id="main" />
       </Fragment>
     );
   }
 }
-export default MyRecipes;
+
+const mapStateToProps = state => {
+  let postedRecipes = [];
+  if (state.authenticatedUser.name) {
+    postedRecipes = state.authenticatedUser.postedRecipes.map(
+      recipe => recipe.properties
+    );
+  }
+
+  return {
+    postedRecipes
+  };
+};
+
+export default connect(mapStateToProps)(MyRecipes);
