@@ -37,27 +37,33 @@ class RecipeCard extends React.Component {
             image={recipe.imageUrl}
             title={recipe.name}
           />
-          <span className="blackOut" />
-          <span className="missingHeader">
-            You're Missing{' '}
-            <span className="badge">
-              {recipe.ingredients
-                ? recipe.ingredients.filter(
-                    ingredient => userIngredients.indexOf(ingredient) === -1
-                  ).length
-                : 0}
-            </span>{' '}
-            Ingredients:
-          </span>
-          <span className="missingList">
-            {recipe.ingredients
-              ? recipe.ingredients
-                  .filter(
-                    ingredient => userIngredients.indexOf(ingredient) === -1
-                  )
-                  .join('\n')
-              : ''}
-          </span>
+
+          {this.props.hideMissingIngredients ? null : (
+            <div>
+              <span className="blackOut" />
+
+              <span className="missingHeader">
+                You're Missing{' '}
+                <span className="badge">
+                  {recipe.ingredients
+                    ? recipe.ingredients.filter(
+                        ingredient => userIngredients.indexOf(ingredient) === -1
+                      ).length
+                    : 0}
+                </span>{' '}
+                Ingredients:
+              </span>
+              <span className="missingList">
+                {recipe.ingredients
+                  ? recipe.ingredients
+                      .filter(
+                        ingredient => userIngredients.indexOf(ingredient) === -1
+                      )
+                      .join('\n')
+                  : ''}
+              </span>
+            </div>
+          )}
         </Link>
         <CardContent>
           <Typography component="p">
@@ -104,9 +110,12 @@ RecipeCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    authenticatedUser: state.authenticatedUser
+    authenticatedUser: state.authenticatedUser,
+    hideMissingIngredients: ownProps.hideMissingIngredients
+      ? ownProps.hideMissingIngredients
+      : null
   };
 };
 

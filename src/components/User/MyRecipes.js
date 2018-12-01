@@ -52,7 +52,6 @@ const mapStateToProps = state => {
       recipe => recipe.properties
     );
   }
-
   return {
     postedRecipes,
     savedRecipes
