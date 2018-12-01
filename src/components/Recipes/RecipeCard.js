@@ -34,11 +34,11 @@ class RecipeCard extends React.Component {
         <CardContent>
           <Typography component="p">
             Cuisine:{' '}
-            {recipe.cuisine ? recipe.cuisine[0].properties.name : 'None'}
+            {recipe.cuisine ? recipe.cuisine : 'None'}
           </Typography>
           <Typography component="p">
             Category:{' '}
-            {recipe.category ? recipe.category[0].properties.name : 'None'}
+            {recipe.category ? recipe.category : 'None'}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
