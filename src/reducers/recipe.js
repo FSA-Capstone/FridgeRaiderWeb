@@ -1,60 +1,54 @@
 import axios from 'axios';
-import {setAuthenticatedUser} from './authenticatedUser.js';
+import { setAuthenticatedUser } from './authenticatedUser.js';
 
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
 const ADD_RECIPE = 'ADD_RECIPE';
 const GET_RECIPE = 'GET_RECIPE';
 
-const _addRecipe = (recipe) => {
-	return {
-		type: ADD_RECIPE,
-		recipe
-	};
+const _addRecipe = recipe => {
+  return {
+    type: ADD_RECIPE,
+    recipe
+  };
 };
 
 // action creators
-const _getRecipes = (recipes) => {
-	return {
-		type: GET_RECIPES,
-		recipes
-	};
+const _getRecipes = recipes => {
+  return {
+    type: GET_RECIPES,
+    recipes
+  };
 };
 
-const _getRecipe = (recipe) => {
-	return {
-		type: GET_RECIPE,
-		recipe
-	};
+const _getRecipe = recipe => {
+  return {
+    type: GET_RECIPE,
+    recipe
+  };
 };
 
 // thunks
-
 
 const createNewRecipe = recipe => {
   return (dispatch, getState) => {
     console.log(recipe);
     return axios
-      .post('http://localhost:3000/api/recipes/', recipe)
+      .post(`${process.env.API_URL}/api/recipes/`, recipe)
       .then(response => {
         dispatch(_addRecipe(response.data));
 
         if (getState().authenticatedUser.name) {
           const updatedUser = getState().authenticatedUser;
           updatedUser.postedRecipes.push(response.data);
-          
-          console.log(updatedUser)
-          dispatch(setAuthenticatedUser(updatedUser))
+          console.log(updatedUser);
+          dispatch(setAuthenticatedUser(updatedUser));
         }
       });
-
   };
 };
 
 const getRecipesForIngredients = (ingredients) => {
-  console.log("something")
-  console.log(ingredients)
-  console.log("end of something")
 	return (dispatch) => {
 		return axios
 			.get(`${process.env.API_URL}/api/recipes?ingredients=${encodeURI(ingredients)}`)
@@ -62,26 +56,28 @@ const getRecipesForIngredients = (ingredients) => {
 			.then((recipes) => dispatch(_getRecipes(recipes)))
 			.catch((error) => console.log(error));
 	};
-};
 
-const getRecipe = (id) => {
-	return (dispatch) => {
-		return axios
-			.get(`${process.env.API_URL}/api/recipes/${id}`)
-			.then((res) => res.data)
-			.then((review) => dispatch(_getRecipe(review)))
-			.catch((error) => console.log(error));
-	};
+const getRecipe = id => {
+  return dispatch => {
+    return axios
+      .get(`${process.env.API_URL}/api/recipes/${id}`)
+      .then(res => res.data)
+      .then(review => dispatch(_getRecipe(review)))
+      .catch(error => console.log(error));
+  };
 };
 
 const postReview = (recipeId, userId, review) => {
-	return (dispatch) => {
-		return axios
-			.put(`${process.env.API_URL}/api/recipes/${recipeId}/review/${userId}`, review)
-			.then((res) => res.data)
-			.then((recipe) => dispatch(_getRecipe(recipe)))
-			.catch((error) => console.log(error));
-	};
+  return dispatch => {
+    return axios
+      .put(
+        `${process.env.API_URL}/api/recipes/${recipeId}/review/${userId}`,
+        review
+      )
+      .then(res => res.data)
+      .then(recipe => dispatch(_getRecipe(recipe)))
+      .catch(error => console.log(error));
+  };
 };
 
 // reducer
@@ -89,7 +85,7 @@ const recipeReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_RECIPE:
       return [...state, action.recipe];
-      
+
     case GET_RECIPES:
       state = action.recipes;
       break;
@@ -103,4 +99,10 @@ const recipeReducer = (state = [], action) => {
   return state;
 };
 
-export { createNewRecipe, recipeReducer, getRecipesForIngredients, getRecipe, postReview };
+export {
+  createNewRecipe,
+  recipeReducer,
+  getRecipesForIngredients,
+  getRecipe,
+  postReview
+};

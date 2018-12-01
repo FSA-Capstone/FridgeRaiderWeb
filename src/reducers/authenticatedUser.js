@@ -36,7 +36,7 @@ const checkForLoggedInGoogleUser = user => {
   return async dispatch => {
     const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
-    if (firebaseRedirectResult.user || (user && user.name)) {
+    if (firebaseRedirectResult.user || (user && user.email)) {
       var idToken = await firebase.auth().currentUser.getIdToken(true);
 
       const response = await axios.post(
@@ -52,8 +52,12 @@ const checkForLoggedInGoogleUser = user => {
           name: firebaseRedirectResult.user.displayName,
           email: firebaseRedirectResult.user.email,
           password: firebaseRedirectResult.user.uid,
-          userName: firebaseRedirectResult.user.email
+          userName: firebaseRedirectResult.user.email,
+          isAdmin: false
         };
+
+        console.log(newUser)
+
 
         let newUserResponse = await axios.post(
           `${process.env.API_URL}/api/users`,
