@@ -14,13 +14,14 @@ import RecipeDetails from './Recipes/RecipeDetails';
 import MyAccount from './User/MyAccount';
 import MyRecipes from './User/MyRecipes';
 import { auth } from './User/FirebaseComponent.js';
-import { checkForLoggedInGoogleUser, logout } from '../store';
+import { getCategories, checkForLoggedInGoogleUser, logout } from '../store';
 import { getCuisines } from '../reducers/cuisine'
 
 class App extends Component {
   componentDidMount() {
     const { init } = this.props
     init();
+    this.props.getCategories();
     this.props.exchangeTokenForAuth();
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -72,7 +73,9 @@ const mapDispatchToProps = dispatch => {
     },
     exchangeTokenForAuth: () => dispatch(exchangeTokenForAuth()),
     logout: () => dispatch(logout()),
-    checkForLoggedInGoogleUser: user => dispatch(checkForLoggedInGoogleUser(user))
+    checkForLoggedInGoogleUser: user =>
+      dispatch(checkForLoggedInGoogleUser(user)),
+    getCategories: () => dispatch(getCategories())
   };
 };
 
