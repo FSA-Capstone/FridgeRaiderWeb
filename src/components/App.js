@@ -14,7 +14,7 @@ import RecipeDetails from './Recipes/RecipeDetails';
 import MyAccount from './User/MyAccount';
 import MyRecipes from './User/MyRecipes';
 import { auth } from './User/FirebaseComponent.js';
-import { getCategories, checkForLoggedInGoogleUser, logout } from '../store';
+import { getCategories, getIngredients, checkForLoggedInGoogleUser, logout } from '../store';
 import { getCuisines } from '../reducers/cuisine'
 
 class App extends Component {
@@ -28,6 +28,7 @@ class App extends Component {
         this.props.checkForLoggedInGoogleUser(user);
       }
     });
+    this.props.getIngredients();
   };
 
   render() {
@@ -47,7 +48,7 @@ class App extends Component {
               path="/recipes/:id"
               render={({ match }) => <RecipeDetails id={match.params.id} />}
             />
-            <Route path="/recipes" component={Recipes} />
+            <Route path="/recipes" render={({ history }) => <Recipes history={history} />} />
             <Route exact path="/" component={Home} />
             <Route exact path="/myaccount" component={MyAccount} />
             <Route exact path="/myrecipes" component={MyRecipes} />
@@ -75,7 +76,8 @@ const mapDispatchToProps = dispatch => {
     logout: () => dispatch(logout()),
     checkForLoggedInGoogleUser: user =>
       dispatch(checkForLoggedInGoogleUser(user)),
-    getCategories: () => dispatch(getCategories())
+    getCategories: () => dispatch(getCategories()),
+    getIngredients: () => dispatch(getIngredients())
   };
 };
 

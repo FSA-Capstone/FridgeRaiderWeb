@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 class RecipeCard extends React.Component {
@@ -20,16 +21,19 @@ class RecipeCard extends React.Component {
   };
 
   render() {
-    const { classes, recipe } = this.props;
+    const { classes, recipe, userIngredients } = this.props;
     return (
       <Card className={classes.card}>
         <CardHeader title={recipe.name} />
-        <Link to={`/recipes/${recipe.id}`}>
+        <Link to={`/recipes/${recipe.id}`} className="recipeLink">
             <CardMedia
               className={classes.media}
               image={recipe.imageUrl}
               title={recipe.name}
             />
+            <span className="blackOut"></span>
+            <span className="missingHeader">You're Missing <span class="badge">{recipe.ingredients ? recipe.ingredients.filter( ingredient => userIngredients.indexOf(ingredient) === -1).length : 0}</span> Ingredients:</span>
+            <span className="missingList">{ recipe.ingredients ? recipe.ingredients.filter( ingredient => userIngredients.indexOf(ingredient) === -1).join('\n') : ''}</span>
         </Link>
         <CardContent>
           <Typography component="p">

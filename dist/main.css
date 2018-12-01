@@ -160,4 +160,65 @@ li button:focus {
   border: .5px solid #666;
   padding: 10px 60px;
 }
-
+.blackOut {
+  display: none;
+  background-color: rgba(0,0,0,.6);
+  height: 168.75;
+  width: 100%;
+  position: relative;
+  margin-top: -168.75px;
+  z-index: 3;
+}
+.missingHeader {
+  display: none;
+  width: 95%;
+  font-size: 1.2em;
+  top: 70px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0%);
+  color: whitesmoke;
+  text-align: center;
+  z-index: 4;
+}
+.missingList {
+  display: none;
+  width: 70%;
+  height: 130px;
+  top: 100px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0%);
+  color: whitesmoke;
+  white-space: pre-wrap;
+  text-align: center;
+  overflow-y: scroll;
+  z-index: 4;
+}
+.missingList::-webkit-scrollbar {
+  width: 4px;
+}
+.missingList::-webkit-scrollbar-track {
+  background: none; 
+}
+.missingList::-webkit-scrollbar-thumb {
+  background: whitesmoke; 
+  border-radius: 2px;
+}
+.missingList::-webkit-scrollbar-thumb:hover {
+  background: #bbb; 
+}
+.badge {
+  right: -5px;
+  top: -31px;
+  font-size: 16px;
+  background-color: #c70000;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  border-radius: 13px;
+  z-index: -1;
+}
+a.recipeLink:hover span {
+  display: inline-block;
+}

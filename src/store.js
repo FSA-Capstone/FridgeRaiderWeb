@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import { ingredientReducer, getIngredients, setIngredients, addIngredient, removeIngredient } from './reducers/ingredients';
 import {
   recipeReducer,
   createNewRecipe,
@@ -24,6 +25,7 @@ import { cuisineReducer } from './reducers/cuisine';
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
   recipes: recipeReducer,
+  ingredients: ingredientReducer,
   cuisines: cuisineReducer,
   categories: categoryReducer
 });
@@ -42,5 +44,9 @@ export {
   getRecipesForIngredients,
   getRecipe,
   postReview,
-  createNewRecipe
+  createNewRecipe,
+  getIngredients,
+  setIngredients,
+  addIngredient,
+  removeIngredient,
 };
