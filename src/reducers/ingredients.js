@@ -55,11 +55,15 @@ const setIngredients = (ingredients, history) => {
 };
 
 const addIngredient = (ingredient) => {
-	_addIngredient(ingredient)
+	return (dispatch) => {
+		dispatch(_addIngredient(ingredient))
+	};
 };
 
 const removeIngredient = (ingredient) => {
-	dispatch(_removeIngredient(ingredient))
+	return (dispatch) => {
+		dispatch(_removeIngredient(ingredient))
+	};
 };
 
 // reducer
