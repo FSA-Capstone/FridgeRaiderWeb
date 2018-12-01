@@ -52,6 +52,9 @@ const createNewRecipe = recipe => {
 };
 
 const getRecipesForIngredients = (ingredients) => {
+  console.log("something")
+  console.log(ingredients)
+  console.log("end of something")
 	return (dispatch) => {
 		return axios
 			.get(`${process.env.API_URL}/api/recipes?ingredients=${encodeURI(ingredients)}`)

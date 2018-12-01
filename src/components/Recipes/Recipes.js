@@ -15,6 +15,7 @@ import {
   Collapse
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { getRecipesForIngredients } from '../../store';
 
 class Recipes extends Component {
   constructor(props) {
@@ -51,13 +52,27 @@ class Recipes extends Component {
         Snack: false,
         Desert: false
       },
-      recipes: props.recipes.slice(0, 24)
+      recipes: props.recipes.slice(0, 24),
+      allIngredients: props.allIngredients,
+      userIngredients: props.userIngredients,
     };
     this.expandCuisines = this.expandCuisines.bind(this);
     this.handleCuisines = this.handleCuisines.bind(this);
     this.expandTypes = this.expandTypes.bind(this);
     this.handleTypes = this.handleTypes.bind(this);
     this.filterRecipes = this.filterRecipes.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getRecipesForIngredients(this.props.userIngredients)
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.recipes !== this.props.recipes) {
+      this.setState({
+        recipes: this.props.recipes.slice(0, 24)
+      })
+    }
   }
 
   expandCuisines() {
@@ -104,7 +119,7 @@ class Recipes extends Component {
     const { cuisines, mealTypes } = this.state;
     const cuisineCheck = anyEnabled(cuisines);
     const typeCheck = anyEnabled(mealTypes);
-    let recipes = this.props.recipes;
+    let recipes = this.state.recipes;
     if (cuisineCheck) {
       recipes = recipes.filter(
         recipe => cuisines[recipe.cuisine]
@@ -122,7 +137,10 @@ class Recipes extends Component {
 
   render() {
     const { expandCuisines, handleCuisines, expandTypes, handleTypes } = this;
-    const { expanded, cuisines, recipes, mealTypes } = this.state;
+    const { expanded, cuisines, recipes, mealTypes, userIngredients } = this.state;
+    if(recipes.length > 0 && userIngredients.length === 0) {
+      this.props.history.push('/')
+    }
     console.log(recipes[0]);
     return (
       <div className="reults" style={{ width: '99.9%' }}>
@@ -239,7 +257,7 @@ class Recipes extends Component {
                 key={recipe.id}
                 style={{ height: '440px', width: '306px', margin: '50px 20px' }}
               >
-                <RecipeCard recipe={recipe} />
+                <RecipeCard recipe={recipe} userIngredients={userIngredients} />
               </GridListTile>
             );
           })}
@@ -249,10 +267,18 @@ class Recipes extends Component {
   }
 }
 
-const mapStateToProps = ({ recipes }) => {
+const mapStateToProps = ({ recipes, ingredients }) => {
   return {
-    recipes
+    recipes,
+    allIngredients: ingredients.allIngredients,
+    userIngredients: ingredients.userIngredients
   };
 };
 
-export default connect(mapStateToProps)(Recipes);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRecipesForIngredients: (ingredients) => dispatch(getRecipesForIngredients(ingredients))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recipes);

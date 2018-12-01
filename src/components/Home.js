@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { InputBase, Button, Icon } from '@material-ui/core';
 import { Edit as EditIcon, Search } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { getRecipesForIngredients } from '../store';
+import { setIngredients } from '../store';
 
 class Home extends Component {
 	constructor() {
@@ -48,7 +48,7 @@ class Home extends Component {
 
 	handleSearch() {
     console.log('Clicked!')
-		this.props.getRecipesForIngredients(this.state.ingredients).then(() => this.props.history.push('/recipes'));
+		this.props.setIngredients(this.state.ingredients, this.props.history);
 	}
 
 	render() {
@@ -124,7 +124,7 @@ class Home extends Component {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getRecipesForIngredients: (ingredients) => dispatch(getRecipesForIngredients(ingredients))
+		setIngredients: (ingredients, history) => dispatch(setIngredients(ingredients, history))
 	};
 };
 
