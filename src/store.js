@@ -18,10 +18,13 @@ import {
   registerNewUser
 } from './reducers/authenticatedUser';
 import { getCategories, categoryReducer } from './reducers/category';
+import { cuisineReducer } from './reducers/cuisine';
+
 
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
   recipes: recipeReducer,
+  cuisines: cuisineReducer,
   categories: categoryReducer
 });
 
