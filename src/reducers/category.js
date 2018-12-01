@@ -20,7 +20,7 @@ const getCategories = categories => {
 const categoryReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_CATEGORIES:
-      return [...state, action.categories];
+      return [...state, ...action.categories];
 
     default:
       return state;
