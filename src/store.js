@@ -25,7 +25,7 @@ import { cuisineReducer } from './reducers/cuisine';
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
   recipes: recipeReducer,
-  ingredients: ingredientReducer
+  ingredients: ingredientReducer,
   cuisines: cuisineReducer,
   categories: categoryReducer
 });
