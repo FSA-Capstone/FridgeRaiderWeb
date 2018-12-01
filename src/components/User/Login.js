@@ -28,10 +28,6 @@ class Login extends Component {
     auth.signInWithRedirect(provider);
   }
 
-  componentDidMount() {
-    this.props.checkForLoggedInGoogleUser();
-  }
-
   handleLogin(event) {
     const { userName, password } = this.state;
     event.preventDefault();
