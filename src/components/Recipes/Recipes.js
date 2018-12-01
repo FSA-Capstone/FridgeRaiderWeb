@@ -107,12 +107,12 @@ class Recipes extends Component {
     let recipes = this.props.recipes;
     if (cuisineCheck) {
       recipes = recipes.filter(
-        recipe => cuisines[recipe.cuisine[0].properties.name]
+        recipe => cuisines[recipe.cuisine]
       );
     }
     if (typeCheck) {
       recipes = recipes
-        .filter(recipe => mealTypes[recipe.category[0].properties.name])
+        .filter(recipe => mealTypes[recipe.category])
         .slice(0, 24);
     }
     this.setState({
