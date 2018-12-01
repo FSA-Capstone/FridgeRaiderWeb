@@ -30,7 +30,9 @@ class MyRecipes extends Component {
         {value === 0 && (
           <MySavedOrUploadedRecipes recipes={this.props.postedRecipes} />
         )}
-        {value === 1 && <MySavedOrUploadedRecipes recipes={[]} />}
+        {value === 1 && (
+          <MySavedOrUploadedRecipes recipes={this.props.savedRecipes} />
+        )}
         {value === 2 && <NewRecipe />}
       </Fragment>
     );
@@ -39,14 +41,21 @@ class MyRecipes extends Component {
 
 const mapStateToProps = state => {
   let postedRecipes = [];
+  let savedRecipes = [];
+
   if (state.authenticatedUser.name) {
     postedRecipes = state.authenticatedUser.postedRecipes.map(
+      recipe => recipe.properties
+    );
+
+    savedRecipes = state.authenticatedUser.savedRecipes.map(
       recipe => recipe.properties
     );
   }
 
   return {
-    postedRecipes
+    postedRecipes,
+    savedRecipes
   };
 };
 
