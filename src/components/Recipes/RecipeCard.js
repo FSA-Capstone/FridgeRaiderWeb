@@ -23,22 +23,22 @@ class RecipeCard extends React.Component {
     const { classes, recipe } = this.props;
     return (
       <Card className={classes.card}>
-        <CardHeader
-          title={recipe.name}
-        />
+        <CardHeader title={recipe.name} />
         <Link to={`/recipes/${recipe.id}`}>
-          <CardMedia
-            className={classes.media}
-            image={recipe.imageUrl}
-            title={recipe.name}
-          />
+            <CardMedia
+              className={classes.media}
+              image={recipe.imageUrl}
+              title={recipe.name}
+            />
         </Link>
         <CardContent>
           <Typography component="p">
-            Cuisine: {recipe.cuisine ? recipe.cuisine[0].properties.name : "None"}
+            Cuisine:{' '}
+            {recipe.cuisine ? recipe.cuisine[0].properties.name : 'None'}
           </Typography>
           <Typography component="p">
-            Category: {recipe.category ? recipe.category[0].properties.name : "None"}
+            Category:{' '}
+            {recipe.category ? recipe.category[0].properties.name : 'None'}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
@@ -65,15 +65,15 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%',
+    paddingTop: '56.25%'
   },
   actions: {
-    display: 'flex',
+    display: 'flex'
   }
 });
 
 RecipeCard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(RecipeCard);
