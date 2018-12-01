@@ -36,8 +36,6 @@ const checkForLoggedInGoogleUser = user => {
   return async dispatch => {
     const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
-    console.log(user)
-
     if (firebaseRedirectResult.user || (user && user.email)) {
       var idToken = await firebase.auth().currentUser.getIdToken(true);
 

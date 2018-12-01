@@ -1,12 +1,28 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import { recipeReducer, createNewRecipe, getRecipesForIngredients, getRecipe, postReview } from './reducers/recipe';
-import { login, checkForLoggedInGoogleUser, logout, authenticatedUserReducer,setAuthenticatedUserOnRefresh, exchangeTokenForAuth, registerNewUser } from './reducers/authenticatedUser';
+import {
+  recipeReducer,
+  createNewRecipe,
+  getRecipesForIngredients,
+  getRecipe,
+  postReview
+} from './reducers/recipe';
+import {
+  login,
+  checkForLoggedInGoogleUser,
+  logout,
+  authenticatedUserReducer,
+  setAuthenticatedUserOnRefresh,
+  exchangeTokenForAuth,
+  registerNewUser
+} from './reducers/authenticatedUser';
+import { getCategories, categoryReducer } from './reducers/category';
 
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
-  recipes: recipeReducer
+  recipes: recipeReducer,
+  categories: categoryReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
@@ -18,6 +34,7 @@ export {
   logout,
   checkForLoggedInGoogleUser,
   registerNewUser,
+  getCategories,
   exchangeTokenForAuth,
   getRecipesForIngredients,
   getRecipe,
