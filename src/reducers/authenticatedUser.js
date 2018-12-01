@@ -26,7 +26,7 @@ const registerNewUser = user => {
   };
 };
 
-const setAuthenticatedUserOnRefresh = user => {
+const setAuthenticatedUser = user => {
   return dispatch => {
     dispatch(_setAuthenticatedUser(user));
   };
@@ -125,5 +125,6 @@ export {
   login,
   logout,
   exchangeTokenForAuth,
+  setAuthenticatedUser,
   authenticatedUserReducer
 };

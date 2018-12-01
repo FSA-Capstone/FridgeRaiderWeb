@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {setAuthenticatedUser} from './authenticatedUser.js';
 
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
@@ -11,7 +12,6 @@ const _addRecipe = recipe => {
     recipe
   };
 };
-
 
 // action creators
 const _getRecipes = recipes => {
@@ -31,11 +31,22 @@ const _getRecipe = recipe => {
 // thunks
 
 const createNewRecipe = recipe => {
-  return dispatch => {
+  return (dispatch, getState) => {
     console.log(recipe);
     return axios
-      .post(`${process.env.API_URL}/api/recipes/`, recipe)
-      .then(response => dispatch(_addRecipe(response.data)));
+      .post('http://localhost:3000/api/recipes/', recipe)
+      .then(response => {
+        dispatch(_addRecipe(response.data));
+
+        if (getState().authenticatedUser.name) {
+          const updatedUser = getState().authenticatedUser;
+          updatedUser.postedRecipes.push(response.data);
+          
+          console.log(updatedUser)
+          dispatch(setAuthenticatedUser(updatedUser))
+        }
+      });
+
   };
 };
 
@@ -66,6 +77,7 @@ const recipeReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_RECIPE:
       return [...state, action.recipe];
+      
     case GET_RECIPES:
       state = action.recipes;
       break;

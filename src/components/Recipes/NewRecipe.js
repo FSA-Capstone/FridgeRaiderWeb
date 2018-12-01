@@ -14,7 +14,8 @@ class NewRecipe extends React.Component {
       instructions: '',
       cuisine: '',
       category: '',
-      ingredientText: ''
+      ingredientText: '',
+      imageUrl: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,8 +23,6 @@ class NewRecipe extends React.Component {
   }
 
   handleSubmit() {
-    console.log(this.props.authenticatedUser);
-
     if (!this.props.authenticatedUser.id) {
       console.log('no authenticated user');
       return;
@@ -35,7 +34,8 @@ class NewRecipe extends React.Component {
       cuisineName: this.state.cuisine,
       categoryName: this.state.category,
       ingredients: this.state.ingredientText.trim().replace(/,/g, '\n'),
-      postedByUserId: this.props.authenticatedUser.id
+      postedByUserId: this.props.authenticatedUser.id,
+      imageUrl: this.state.imageUrl
     };
 
     console.log(recipe);
@@ -56,6 +56,7 @@ class NewRecipe extends React.Component {
       instructions,
       category,
       cuisine,
+      imageUrl,
       ingredientText
     } = this.state;
 
@@ -160,6 +161,24 @@ class NewRecipe extends React.Component {
             name={'ingredientText'}
             rows={3}
             multiline={true}
+          />
+
+          <br />
+
+          <InputBase
+            placeholder="Recipe picture URL"
+            style={{
+              backgroundColor: '#fdfdfd',
+              padding: '3px 10px',
+              margin: '0px auto 15px auto',
+              width: '400px',
+              maxWidth: '80%',
+              border: '1px solid silver',
+              height: '2.35em'
+            }}
+            onChange={handleChange}
+            value={imageUrl}
+            name={'imageUrl'}
           />
 
           <br />
