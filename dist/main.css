@@ -259,6 +259,19 @@ a.recipeLink:hover span {
 .avgRating {
   height: 15px;
 }
+.likeButton {
+  text-align: center;
+  width: 200px;
+  left: 0;
+  right: 0;
+  margin: 15px auto 2px auto;
+  background-color: #f3f3f3;
+  border: .5px solid red;
+  border-radius: 50px;
+}
+.likedButtonText {
+  font-size: .65em;
+}
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
