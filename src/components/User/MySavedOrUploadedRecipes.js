@@ -10,9 +10,10 @@ class MySavedOrUploadedRecipes extends Component {
         <GridList
           id="resultsMain"
           style={{
-            justifyContent: 'space-around',
-            float: 'right',
-            paddingTop: '30px'
+            paddingTop: '30px',
+            width: '100%',
+            justifyContent: 'center'
+
           }}
         >
           {recipes.map(recipe => {
@@ -21,7 +22,7 @@ class MySavedOrUploadedRecipes extends Component {
                 key={recipe.id}
                 style={{ height: '440px', width: '306px', margin: '50px 20px' }}
               >
-                <RecipeCard recipe={recipe} />
+                <RecipeCard hideMissingIngredients={true} recipe={recipe} />
               </GridListTile>
             );
           })}
