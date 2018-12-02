@@ -91,7 +91,7 @@ class Recipes extends Component {
 	}
 
 	addIngredient() {
-    this.props.addIngredient(this.state.input);
+    this.props.addIngredient(this.state.input.toLowerCase());
     const ingredients = this.state.userIngredients.filter((ingredient) => ingredient !== this.state.input)
     ingredients.push(this.state.input.toLowerCase())
     this.props.getRecipesForIngredients(ingredients);
