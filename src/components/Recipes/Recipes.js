@@ -22,40 +22,27 @@ import { getRecipesForIngredients, removeIngredient, addIngredient } from '../..
 
 class Recipes extends Component {
 	constructor(props) {
-		super(props);
+    super(props);
+    let cuisines = {}
+    let mealTypes = {}
+    if(props.cuisines) {
+      props.cuisines.forEach(cuisine => {
+        cuisines[cuisine] = false
+      });
+    }
+    if(props.categories) {
+      props.categories.forEach(category => {
+        mealTypes[category] = false
+      });
+    }
 		this.state = {
 			expanded: {
 				cuisines: true,
 				types: true,
 				ingredients: true
 			},
-			cuisines: {
-				American: false,
-				British: false,
-				Canadian: false,
-				Chinese: false,
-				Dutch: false,
-				French: false,
-				Greek: false,
-				Indian: false,
-				Irish: false,
-				Italian: false,
-				Jamaican: false,
-				Japanese: false,
-				Malaysian: false,
-				Mexican: false,
-				Moroccan: false,
-				Russian: false,
-				Spanish: false,
-				Thai: false,
-				Vietnamese: false
-			},
-			mealTypes: {
-				Breakfast: false,
-				'Main Course': false,
-				Snack: false,
-				Desert: false
-			},
+			cuisines,
+			mealTypes,
 			input: '',
 			recipes: props.recipes.slice(0, 24),
 			allIngredients: props.allIngredients,
@@ -72,7 +59,9 @@ class Recipes extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getRecipesForIngredients(this.props.userIngredients);
+    if(this.props.userIngredients.length > 0) {
+      this.props.getRecipesForIngredients(this.props.userIngredients);
+    }
 	}
 
 	componentDidUpdate(prevProps) {
@@ -85,7 +74,7 @@ class Recipes extends Component {
 			this.setState({
 				userIngredients: this.props.userIngredients
 			});
-		}
+    }
 	}
 
 	handleChange(e) {
@@ -187,10 +176,9 @@ class Recipes extends Component {
 			addIngredient
 		} = this;
 		const { expanded, cuisines, recipes, mealTypes, userIngredients, input } = this.state;
-		if (recipes.length > 0 && userIngredients.length === 0) {
+		if (userIngredients.length === 0) {
 			this.props.history.push('/');
 		}
-		console.log(recipes[0]);
 		return (
 			<div className="reults" style={{ width: '99.9%' }}>
 				<List
@@ -343,9 +331,11 @@ class Recipes extends Component {
 	}
 }
 
-const mapStateToProps = ({ recipes, ingredients }) => {
+const mapStateToProps = ({ recipes, ingredients, cuisines, categories }) => {
 	return {
-		recipes,
+    recipes,
+    cuisines,
+    categories,
 		allIngredients: ingredients.allIngredients,
 		userIngredients: ingredients.userIngredients
 	};
