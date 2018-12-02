@@ -6,7 +6,6 @@ import {
   recipeReducer,
   createNewRecipe,
   getRecipesForIngredients,
-  getRecipe,
   postReview
 } from './reducers/recipe';
 import {
@@ -22,11 +21,13 @@ import {
 } from './reducers/authenticatedUser';
 import { getCategories, categoryReducer } from './reducers/category';
 import { cuisineReducer } from './reducers/cuisine';
+import { singleRecipeReducer, getRecipe } from './reducers/singleRecipe';
 
 
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
   recipes: recipeReducer,
+  recipe: singleRecipeReducer,
   ingredients: ingredientReducer,
   cuisines: cuisineReducer,
   categories: categoryReducer

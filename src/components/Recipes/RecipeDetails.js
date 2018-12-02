@@ -203,8 +203,7 @@ const styles = theme => ({
   },
 });
 
-const mapStateToProps = ({recipes, authenticatedUser},{ id }) => {
-  const recipe = recipes.filter( recipe => recipe.id === id).pop()
+const mapStateToProps = ({recipe, authenticatedUser},{ id }) => {
   return {
     recipe,
     authenticatedUser,
