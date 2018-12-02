@@ -16,6 +16,7 @@ class Login extends Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.loginWithGoogle = this.loginWithGoogle.bind(this);
   }
 
   handleChange = name => event => {
@@ -25,7 +26,7 @@ class Login extends Component {
   };
 
   loginWithGoogle() {
-    auth.signInWithRedirect(provider);
+    auth.signInWithRedirect(provider)
   }
 
   handleLogin(event) {
