@@ -108,7 +108,8 @@ const checkForLoggedInGoogleUser = user => {
           newUser
         );
 
-        dispatch(_setAuthenticatedUser(newUserResponse.data));
+
+        return dispatch(_setAuthenticatedUser(newUserResponse.data));
       }
     }
   };

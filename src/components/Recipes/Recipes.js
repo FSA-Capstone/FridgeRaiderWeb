@@ -321,7 +321,7 @@ class Recipes extends Component {
 								key={recipe.id}
 								style={{ height: '440px', width: '306px', margin: '50px 20px' }}
 							>
-								<RecipeCard recipe={recipe} userIngredients={userIngredients} />
+								<RecipeCard history={this.props.history} recipe={recipe} userIngredients={userIngredients} />
 							</GridListTile>
 						);
 					})}

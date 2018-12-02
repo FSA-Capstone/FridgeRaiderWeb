@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { logout } from '../store.js';
+import { auth } from './User/FirebaseComponent.js';
+import { checkForLoggedInGoogleUser } from '../store';
 
 const styles = {
   largeIcon: {
@@ -30,6 +32,17 @@ class Nav extends Component {
     this.handleProfileMenu = this.handleProfileMenu.bind(this);
     this.handleProfileMenuClose = this.handleProfileMenuClose.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.props.checkForLoggedInGoogleUser(user).then(() => {
+          if (this.props.location.pathname === '/login')
+            this.props.history.push('/');
+        });
+      }
+    });
   }
 
   handleProfileMenu(event) {
@@ -121,7 +134,9 @@ class Nav extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    checkForLoggedInGoogleUser: user =>
+      dispatch(checkForLoggedInGoogleUser(user))
   };
 };
 

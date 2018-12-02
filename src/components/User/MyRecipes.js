@@ -8,32 +8,37 @@ class MyRecipes extends Component {
   constructor() {
     super();
     this.state = {
-      value: 0
+      tab: 0
     };
     this.handleChange = this.handleChange.bind(this);
+    this.setTabToZero = this.setTabToZero.bind(this);
   }
 
-  handleChange(event, value) {
-    this.setState({ value });
+  handleChange(event, tab) {
+    this.setState({ tab });
+  }
+
+  setTabToZero() {
+    this.setState({ tab: 0 });
   }
 
   render() {
-    const { value } = this.state;
-    const { handleChange } = this;
+    const { tab } = this.state;
+    const { handleChange, setTabToZero } = this;
     return (
       <Fragment>
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs value={tab} onChange={handleChange} centered>
           <Tab label={<span style={{ fontSize: 20 }}>Uploaded Recipes</span>} />
           <Tab label={<span style={{ fontSize: 20 }}>Saved Recipes</span>} />
           <Tab label={<span style={{ fontSize: 20 }}>New Recipe</span>} />
         </Tabs>
-        {value === 0 && (
+        {tab === 0 && (
           <MySavedOrUploadedRecipes recipes={this.props.postedRecipes} />
         )}
-        {value === 1 && (
+        {tab === 1 && (
           <MySavedOrUploadedRecipes recipes={this.props.savedRecipes} />
         )}
-        {value === 2 && <NewRecipe />}
+        {tab === 2 && <NewRecipe setTabToZero={setTabToZero} />}
       </Fragment>
     );
   }
@@ -42,6 +47,8 @@ class MyRecipes extends Component {
 const mapStateToProps = state => {
   let postedRecipes = [];
   let savedRecipes = [];
+
+  console.log('auth user', state.authenticatedUser);
 
   if (state.authenticatedUser.name) {
     postedRecipes = state.authenticatedUser.postedRecipes.map(
@@ -52,6 +59,7 @@ const mapStateToProps = state => {
       recipe => recipe.properties
     );
   }
+
   return {
     postedRecipes,
     savedRecipes

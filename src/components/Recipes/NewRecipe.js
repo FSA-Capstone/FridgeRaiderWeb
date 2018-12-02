@@ -39,8 +39,8 @@ class NewRecipe extends React.Component {
     };
 
     console.log(recipe);
-
-    this.props.createNewRecipe(recipe);
+    this.props.createNewRecipe(recipe)
+      .then(() => (this.props.setTabToZero()))
   }
 
   handleChange(e) {

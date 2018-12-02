@@ -27,7 +27,11 @@ class RecipeCard extends React.Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
-  saveRecipe() {
+  saveRecipe(recipe) {
+    if (!this.props.authenticatedUser.id) {
+      this.props.history.push('/login');
+      return;
+    }
     if (this.state.liked === false) {
       this.setState({
         liked: true
