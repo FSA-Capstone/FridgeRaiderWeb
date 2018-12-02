@@ -11,26 +11,39 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { saveRecipe } from '../../store.js';
+import { unSaveRecipe, saveRecipe } from '../../store.js';
 import { connect } from 'react-redux';
 
 class RecipeCard extends React.Component {
-  state = { liked: this.props.authenticatedUser.savedRecipes && this.props.authenticatedUser.savedRecipes.filter( savedRecipe => savedRecipe.properties.id === this.props.recipe.id).length > 0 };
+  state = {
+    liked:
+      this.props.authenticatedUser.savedRecipes &&
+      this.props.authenticatedUser.savedRecipes.filter(
+        savedRecipe => savedRecipe.properties.id === this.props.recipe.id
+      ).length > 0
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
   saveRecipe(recipe) {
-    this.props.saveRecipe(recipe, this.props.authenticatedUser.id);
-    this.setState({
-      liked: true
-    })
+    if (this.state.liked === false) {
+      this.setState({
+        liked: true
+      });
+      this.props.saveRecipe(recipe, this.props.authenticatedUser.id);
+    } else {
+      this.setState({
+        liked: false
+      });
+      this.props.unSaveRecipe(recipe, this.props.authenticatedUser.id);
+    }
   }
 
   render() {
     const { classes, recipe, userIngredients } = this.props;
-    const { liked } = this.state
+    const { liked } = this.state;
     return (
       <Card className={classes.card}>
         <CardHeader title={recipe.name} />
@@ -79,7 +92,11 @@ class RecipeCard extends React.Component {
         <CardActions className={classes.actions} disableActionSpacing>
           <div onClick={() => this.saveRecipe(recipe)}>
             <IconButton aria-label="Add to wish list">
-              { liked ? <FavoriteIcon style={{color: "red"}} /> : <FavoriteIcon />}
+              {liked ? (
+                <FavoriteIcon style={{ color: 'red' }} />
+              ) : (
+                <FavoriteIcon />
+              )}
             </IconButton>
           </div>
           <Link to={`/recipes/${recipe.id}`}>
@@ -124,7 +141,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveRecipe: (recipeId, userId) => dispatch(saveRecipe(recipeId, userId))
+    saveRecipe: (recipe, userId) => dispatch(saveRecipe(recipe, userId)),
+    unSaveRecipe: (recipe, userId) => dispatch(unSaveRecipe(recipe, userId))
   };
 };
 

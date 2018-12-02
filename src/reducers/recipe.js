@@ -31,8 +31,6 @@ const _getRecipe = recipe => {
 // thunks
 
 
-
-
 const createNewRecipe = recipe => {
   return (dispatch, getState) => {
     console.log(recipe);

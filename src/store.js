@@ -16,6 +16,7 @@ import {
   authenticatedUserReducer,
   setAuthenticatedUserOnRefresh,
   exchangeTokenForAuth,
+  unSaveRecipe,
   registerNewUser,
   saveRecipe
 } from './reducers/authenticatedUser';
@@ -46,6 +47,7 @@ export {
   getRecipesForIngredients,
   getRecipe,
   postReview,
+  unSaveRecipe,
   createNewRecipe,
   getIngredients,
   setIngredients,
