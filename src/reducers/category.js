@@ -9,11 +9,12 @@ const _addCategories = categories => {
   };
 };
 
-const getCategories = categories => {
+const getCategories = () => {
   return dispatch => {
     axios
-      .get(`${process.env.API_URL}/api/categories/names`)
-      .then(response => dispatch(_addCategories(response.data)));
+      .get(`${process.env.API_URL}/api/categories`)
+      .then(response => response.data.map(category => category.name ))
+      .then(categories => dispatch(_addCategories(categories)));
   };
 };
 
