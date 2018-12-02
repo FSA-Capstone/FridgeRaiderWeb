@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RecipeCard from './RecipeCard';
+import Pagination from '../Pagination';
 import {
 	GridList,
 	GridListTile,
@@ -43,10 +44,13 @@ class Recipes extends Component {
 			},
 			cuisines,
 			mealTypes,
-			input: '',
-			recipes: props.recipes.slice(0, 24),
+      input: '',
+      allRecipes: props.recipes,
+			recipes: props.recipes.slice(0, 12),
 			allIngredients: props.allIngredients,
-			userIngredients: props.userIngredients
+      userIngredients: props.userIngredients,
+      maxPages: 0,
+      pageNumber: this.props.pageNumber ? this.props.pageNumber : 1
 		};
 		this.expandCuisines = this.expandCuisines.bind(this);
 		this.handleCuisines = this.handleCuisines.bind(this);
@@ -66,14 +70,32 @@ class Recipes extends Component {
 
 	componentDidUpdate(prevProps) {
 		if (prevProps.recipes !== this.props.recipes) {
-			this.setState({
-				recipes: this.props.recipes.slice(0, 24)
-			});
+    let start = (this.state.pageNumber - 1)*12
+    let end = 12*this.state.pageNumber
+    if(start >  Math.ceil(this.props.recipes.length/12)) {
+      start = 0
+      end = 12
+    }
+		this.setState({
+      maxPages: Math.ceil(this.props.recipes.length/12),
+			allRecipes: this.props.recipes,
+			recipes: this.props.recipes.slice(start, end)
+		});
 		}
 		if (prevProps.userIngredients !== this.props.userIngredients) {
 			this.setState({
 				userIngredients: this.props.userIngredients
 			});
+    }
+		if (prevProps.pageNumber !== this.props.pageNumber) {
+      if(this.props.pageNumber) {
+        let start = (this.props.pageNumber - 1)*12
+        let end = 12*this.props.pageNumber
+        this.setState({
+          recipes: this.state.allRecipes.slice(start, end),
+          pageNumber: this.props.pageNumber
+        });
+      }
     }
 	}
 
@@ -158,10 +180,25 @@ class Recipes extends Component {
 		}
 		if (typeCheck) {
 			recipes = recipes.filter((recipe) => mealTypes[recipe.category]);
-		}
-		this.setState({
-			recipes: recipes.slice(0, 24)
-		});
+    }
+    let start = (this.state.pageNumber - 1)*12
+    let end = 12*this.state.pageNumber
+    if(start >  Math.ceil(recipes.length/12)*12) {
+      this.setState({
+        maxPages: Math.ceil(recipes.length/12),
+        pageNumber: 1,
+        allRecipes: recipes,
+        recipes: recipes.slice(0, 12)
+      });
+      this.props.history.push('/recipes')
+    } else {
+      this.setState({
+        maxPages: Math.ceil(recipes.length/12),
+        pageNumber: start === 0 ? 1 : this.state.pageNumber,
+        allRecipes: recipes,
+        recipes: recipes.slice(start, end)
+      });
+    }
 	}
 
 	render() {
@@ -175,10 +212,11 @@ class Recipes extends Component {
 			handleChange,
 			addIngredient
 		} = this;
-		const { expanded, cuisines, recipes, mealTypes, userIngredients, input } = this.state;
+		const { expanded, cuisines, recipes, mealTypes, userIngredients, input, maxPages, pageNumber } = this.state;
 		if (userIngredients.length === 0) {
 			this.props.history.push('/');
-		}
+    }
+    console.log(`Max pages: ${maxPages}, Current page: ${this.props.pageNumber}`)
 		return (
 			<div className="reults" style={{ width: '99.9%' }}>
 				<List
@@ -235,22 +273,24 @@ class Recipes extends Component {
 									className="chip"
 									color="primary"
 								/>
-							))}
-							<InputBase
-								placeholder="Add another ingredient..."
-								className="ingSearch"
-								onChange={handleChange}
-								value={input}
-							/>
-							<Button
-								variant="extendedFab"
-								color="primary"
-								aria-label="Edit"
-								style={{     display: "block", fontSize: "0.7em", height: "35px", margin: "5px auto 10px", left: "0px", right: "0px", boxShadow: "none" }}
-								onClick={addIngredient}
-							>
-								Add Ingredient
-							</Button>
+              ))}
+              <form onSubmit={addIngredient}>
+                <InputBase
+                  placeholder="Add another ingredient..."
+                  className="ingSearch"
+                  onChange={handleChange}
+                  value={input}
+                />
+                <Button
+                  variant="extendedFab"
+                  color="primary"
+                  aria-label="Edit"
+                  style={{     display: "block", fontSize: "0.7em", height: "35px", margin: "5px auto 10px", left: "0px", right: "0px", boxShadow: "none" }}
+                  type="submit"
+                >
+                  Add Ingredient
+                </Button>
+              </form>
 						</Collapse>
 						<ListItem button onClick={expandTypes} style={{ backgroundColor: '#f0f0f0' }}>
 							<ListItemText inset primary="Meal Type" />
@@ -319,12 +359,13 @@ class Recipes extends Component {
 						return (
 							<GridListTile
 								key={recipe.id}
-								style={{ height: '440px', width: '306px', margin: '50px 20px' }}
+								style={{ height: '440px', width: '306px', margin: '20px 15px' }}
 							>
 								<RecipeCard recipe={recipe} userIngredients={userIngredients} />
 							</GridListTile>
 						);
 					})}
+          {pageNumber > 1 || maxPages > pageNumber ? <Pagination maxPages={maxPages} pageNumber={pageNumber}  /> : null}
 				</GridList>
 			</div>
 		);

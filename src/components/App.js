@@ -44,6 +44,7 @@ class App extends Component {
             />
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
+            <Route path="/recipes/page/:pageNumber" render={({ history, match }) => <Recipes history={history} pageNumber={match.params.pageNumber} />} />
             <Route
               path="/recipes/:id"
               render={({ match }) => <RecipeDetails id={match.params.id} />}
