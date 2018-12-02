@@ -230,3 +230,31 @@ a.recipeLink:hover span {
   margin-top: 25px;
   border-radius: 20px;
 }
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+/* @media (min-width: 481px) and (max-width: 767px) {
+  
+  body {
+    zoom: 150%;
+    overflow-x: hidden;
+  }
+  
+} */
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+/* @media (min-width: 320px) and (max-width: 480px) {
+  
+  body {
+    zoom: 150%;
+    overflow-x: hidden;
+  }
+  
+} */
