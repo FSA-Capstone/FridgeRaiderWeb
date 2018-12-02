@@ -36,12 +36,12 @@ class RecipeCard extends React.Component {
       this.setState({
         liked: true
       });
-      this.props.saveRecipe(this.state.recipe, this.state.authenticatedUser.id);
+      this.props.saveRecipe(recipe, this.props.authenticatedUser.id);
     } else {
       this.setState({
         liked: false
       });
-      this.props.unSaveRecipe(this.state.recipe, this.state.authenticatedUser.id);
+      this.props.unSaveRecipe(recipe, this.props.authenticatedUser.id);
     }
   }
 
