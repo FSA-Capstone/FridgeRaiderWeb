@@ -33,7 +33,7 @@ class NewRecipe extends React.Component {
       instructions: this.state.instructions,
       cuisineName: this.state.cuisine,
       categoryName: this.state.category,
-      ingredients: this.state.ingredientText.trim().replace(/,/g, '\n'),
+      ingredients: this.state.ingredientText.trim().toLowerCase().replace(/,/g, '\n'),
       postedByUserId: this.props.authenticatedUser.id,
       imageUrl: this.state.imageUrl
     };

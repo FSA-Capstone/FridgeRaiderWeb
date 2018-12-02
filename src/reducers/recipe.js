@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAuthenticatedUser } from './authenticatedUser.js';
+import { getRecipe } from './singleRecipe';
 
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
@@ -18,13 +19,6 @@ const _getRecipes = recipes => {
   return {
     type: GET_RECIPES,
     recipes
-  };
-};
-
-const _getRecipe = recipe => {
-  return {
-    type: GET_RECIPE,
-    recipe
   };
 };
 
@@ -61,16 +55,6 @@ const getRecipesForIngredients = ingredients => {
   };
 };
 
-const getRecipe = id => {
-  return dispatch => {
-    return axios
-      .get(`${process.env.API_URL}/api/recipes/${id}`)
-      .then(res => res.data)
-      .then(review => dispatch(_getRecipe(review)))
-      .catch(error => console.log(error));
-  };
-};
-
 const postReview = (recipeId, userId, review) => {
   return dispatch => {
     return axios
@@ -79,7 +63,7 @@ const postReview = (recipeId, userId, review) => {
         review
       )
       .then(res => res.data)
-      .then(recipe => dispatch(_getRecipe(recipe)))
+      .then(recipe => dispatch(getRecipe(recipe.id)))
       .catch(error => console.log(error));
   };
 };
@@ -93,12 +77,6 @@ const recipeReducer = (state = [], action) => {
     case GET_RECIPES:
       state = action.recipes;
       break;
-
-    case GET_RECIPE:
-      const newState = state.filter(recipe => recipe.id !== action.recipe.id);
-      newState.push(action.recipe);
-      state = newState;
-      break;
   }
   return state;
 };
@@ -107,6 +85,5 @@ export {
   createNewRecipe,
   recipeReducer,
   getRecipesForIngredients,
-  getRecipe,
   postReview
 };
