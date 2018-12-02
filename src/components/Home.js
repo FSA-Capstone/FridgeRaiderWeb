@@ -23,7 +23,8 @@ class Home extends Component {
 		});
 	}
 
-	addIngredient() {
+	addIngredient(e) {
+    e.preventDefault()
 		const ingredients = this.state.ingredients;
 		const ingredient = this.state.input.trim().toLowerCase();
 		if (ingredient !== '') {
@@ -96,7 +97,8 @@ class Home extends Component {
 					</div>
 				) : (
 					<div style={{ height: 'calc(50vh - 220px)' }} />
-				)}
+        )}
+        <form onSubmit={addIngredient}>
 				<InputBase
 					placeholder="What do you have in your fridge..."
 					style={{
@@ -117,12 +119,13 @@ class Home extends Component {
 				<Button
 					variant="extendedFab"
 					color="primary"
-					aria-label="Edit"
+          aria-label="Edit"
+          type="submit"
 					style={{ display: 'block', margin: '0 auto 70px auto', left: 0, right: 0 }}
-					onClick={addIngredient}
 				>
 					<EditIcon /> Add Ingredient
 				</Button>
+        </form>
 			</Fragment>
 		);
 	}

@@ -272,30 +272,23 @@ a.recipeLink:hover span {
 .likedButtonText {
   font-size: .65em;
 }
-/* 
-  ##Device = Low Resolution Tablets, Mobiles (Landscape)
-  ##Screen = B/w 481px to 767px
-*/
-
-/* @media (min-width: 481px) and (max-width: 767px) {
-  
-  body {
-    zoom: 150%;
-    overflow-x: hidden;
-  }
-  
-} */
-
-/* 
-  ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
-*/
-
-/* @media (min-width: 320px) and (max-width: 480px) {
-  
-  body {
-    zoom: 150%;
-    overflow-x: hidden;
-  }
-  
-} */
+#pagination {
+  width: 70%;
+  margin: 0 15% 70px 15%;
+  text-align: center;
+}
+.pageNumbers {
+  color: whitesmoke;
+  background-color: #3f51b5;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 0 5px;
+  font-size: 1.3em;
+}
+.disabledNumber {
+  display: inline-block;
+  color: #3f51b5;
+  background-color: #bbb;
+  cursor: default;
+}
