@@ -142,8 +142,12 @@ const exchangeTokenForAuth = () => {
         }
       })
       .then(response => response.data)
-      .then(auth => {
-        dispatch(_setAuthenticatedUser(auth));
+      .then((auth) => {
+        return axios.get(`${process.env.API_URL}/api/users/${auth.id}`)
+      })
+      .then(response => response.data)
+      .then(user => {
+        dispatch(_setAuthenticatedUser(user));
       })
       .catch(ex => window.localStorage.removeItem('token'));
   };
