@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles, Card, CardHeader, CardContent, Typography, Divider, TextField, MenuItem, MySnackbarContentWrapper, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getRecipe, postReview } from '../../store';
+import { FacebookShareButton, GooglePlusShareButton, TwitterShareButton, PinterestShareButton } from 'react-share'
+import { FacebookIcon, TwitterIcon, GooglePlusIcon, PinterestIcon } from 'react-share';
 
 class RecipeDetails extends Component {
   constructor(props) {
@@ -79,6 +81,8 @@ class RecipeDetails extends Component {
     const ratings = [1, 2, 3, 4, 5]
     if(!recipe.id) return null;
 
+    console.log(recipe.id)
+
     return (
       <Fragment>
         <div id="recipeBack" />
@@ -106,6 +110,21 @@ class RecipeDetails extends Component {
             </Card>
           </div>
         </div>
+
+          <div className={classes.container}>
+            <FacebookShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`} quote='I just raided my fridge!'>
+              <FacebookIcon size={32} round={true} />
+            </FacebookShareButton>
+
+            <TwitterShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`} title="I just raided my fridge!">
+              <TwitterIcon size={32} round={true} />
+            </TwitterShareButton>
+
+            <GooglePlusShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}>
+              <GooglePlusIcon size={32} round={true} />
+            </GooglePlusShareButton>
+          </div>
+
         <hr />
           <div className={classes.container}>
             <div style={{ gridColumnEnd: 'span 12' }}>
