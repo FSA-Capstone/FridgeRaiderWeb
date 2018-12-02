@@ -37,14 +37,12 @@ const createNewRecipe = recipe => {
     return axios
       .post(`${process.env.API_URL}/api/recipes/`, recipe)
       .then(response => {
-        dispatch(_addRecipe(response.data));
 
         if (getState().authenticatedUser.name) {
-          const updatedUser = getState().authenticatedUser;
-          updatedUser.postedRecipes.push(response.data);
-          console.log(updatedUser);
-          dispatch(setAuthenticatedUser(updatedUser));
+          dispatch(setAuthenticatedUser(response.data));
         }
+        
+        return
       });
   };
 };

@@ -28,6 +28,11 @@ class RecipeCard extends React.Component {
   };
 
   saveRecipe(recipe) {
+    if (!this.props.authenticatedUser.id) {
+      this.props.history.push('/login');
+      return;
+    }
+
     if (this.state.liked === false) {
       this.setState({
         liked: true

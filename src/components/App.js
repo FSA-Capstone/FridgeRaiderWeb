@@ -35,7 +35,7 @@ class App extends Component {
       <Router>
         <Fragment>
           <CssBaseline />
-          <Route path="/" render={({ history }) => <Nav history={history} />} />
+          <Route path="/" render={({ history, location }) => <Nav history={history} location={location} />} />
           <Switch>
             <Route
               path="/login"

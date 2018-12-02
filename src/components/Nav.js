@@ -37,9 +37,10 @@ class Nav extends Component {
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
-        this.props
-          .checkForLoggedInGoogleUser(user)
-          .then(() => this.props.history.push('/'));
+        this.props.checkForLoggedInGoogleUser(user).then(() => {
+          if (this.props.location.pathname === '/login')
+            this.props.history.push('/');
+        });
       }
     });
   }
