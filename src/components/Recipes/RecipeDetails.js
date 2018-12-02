@@ -80,7 +80,16 @@ class RecipeDetails extends Component {
     const { handleChange, postReview } = this
     const ratings = [1, 2, 3, 4, 5]
     if(!recipe.id) return null;
-
+    let numRatings = 0;
+    let totalRating = 0;
+    if(recipe.reviews) {
+      console.log(recipe.reviews[0].relation)
+      recipe.reviews.map( review => {
+        numRatings += 1;
+        totalRating += review.relation.rating
+      })
+    }
+    const avgRating = Math.ceil(totalRating / numRatings)
     console.log(recipe.id)
 
     return (
@@ -88,18 +97,18 @@ class RecipeDetails extends Component {
         <div id="recipeBack" />
         <div className="recipeContainer">
         <h1>{recipe.name}</h1>
+        <Typography component="p" id="recipeInfo" variant="subheading" gutterBottom={true} >
+        Avg. Rating: <img src={`/dist/rating/${avgRating}.png`} className="avgRating" />  |  Cuisine: {recipe.cuisine[0].properties.name}  |  Category: {recipe.category[0].properties.name}
+        </Typography>
         <div className={"topRecipe"}>
-          <img src={recipe.imageUrl} style={{ width: "600px", maxWidth: "70%", height: "auto", alignSelf: "start", padding: "25px" }} />
-          <div style={{ width: "400px" }}>
-            <Card className={classes.card}>
+          <img src={recipe.imageUrl} style={{ width: "575px", maxWidth: "70%", height: "auto", alignSelf: "start", padding: "25px", border: ".5px solid #bbb", marginTop: "25px" }} />
+          <div style={{ width: "400px", marginTop: "25px" }}>
+            <Card id="ingredientsPaper">
               <CardContent>
-                <Typography component="p" id="recipeInfo" variant="subheading" gutterBottom={true} >
-                  Cuisine: {recipe.cuisine[0].properties.name}  |  Category: {recipe.category[0].properties.name}
-                </Typography>
-                <Divider className={classes.divider}/>
                 <Typography component="div" variant="subheading" gutterBottom={true} >
                   <CardHeader title="Ingredients" style={{textAlign: "center"}} />
                 </Typography>
+                <Divider className={classes.divider}/>
                 {
                   recipe.ingredients.map((ingredient, index) => 
                     <Typography key={index} component="p" variant="subheading" gutterBottom={true} >
@@ -108,34 +117,36 @@ class RecipeDetails extends Component {
                 }
               </CardContent>
             </Card>
+            <div className="socialContainer">
+              <div style={{width: "40px"}}></div>
+              <FacebookShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`} quote='I just raided my fridge!'>
+                <FacebookIcon size={32} round={true} />
+              </FacebookShareButton>
+  
+              <TwitterShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`} title="I just raided my fridge!">
+                <TwitterIcon size={32} round={true} />
+              </TwitterShareButton>
+  
+              <GooglePlusShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}>
+                <GooglePlusIcon size={32} round={true} />
+              </GooglePlusShareButton>
+              <div style={{width: "40px"}}></div>
+            </div>
           </div>
         </div>
 
-          <div className={classes.container}>
-            <FacebookShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`} quote='I just raided my fridge!'>
-              <FacebookIcon size={32} round={true} />
-            </FacebookShareButton>
 
-            <TwitterShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`} title="I just raided my fridge!">
-              <TwitterIcon size={32} round={true} />
-            </TwitterShareButton>
-
-            <GooglePlusShareButton url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}>
-              <GooglePlusIcon size={32} round={true} />
-            </GooglePlusShareButton>
-          </div>
-
-        <hr />
-          <div className={classes.container}>
-            <div style={{ gridColumnEnd: 'span 12' }}>
+        <hr style={{ border: ".5px solid #ddd" }} />
+          <div className="recipeInstructions">
+            <div style={{ gridColumnEnd: 'span 12', fontSize: "1.3em" }}>
               Instructions:
             </div>
-            <div style={{ gridColumnEnd: 'span 12' }}>
-              {recipe.instructions}
-            </div>
+            <ul style={{ gridColumnEnd: 'span 12', fontSize: "1.0em" }}>
+              {recipe.instructions.split(". ").map( (instruction, ix) => <li key={ix} className="instruction">{instruction}</li>)}
+            </ul>
           </div>
         </div>
-        <div className="reviewBlock">
+        <div className="reviewBlock recipeContainer">
           <div style={{ gridColumnEnd: 'span 12' }}>
             <h2 className="reviewHead">Reviews</h2>
               {this.props.authenticatedUser.id ?

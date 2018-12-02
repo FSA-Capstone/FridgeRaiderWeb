@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAuthenticatedUser } from './authenticatedUser.js';
+import { getRecipe } from './singleRecipe';
 
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
@@ -64,7 +65,7 @@ const postReview = (recipeId, userId, review) => {
         review
       )
       .then(res => res.data)
-      .then(recipe => dispatch(_getRecipe(recipe)))
+      .then(recipe => dispatch(getRecipe(recipe.id)))
       .catch(error => console.log(error));
   };
 };
