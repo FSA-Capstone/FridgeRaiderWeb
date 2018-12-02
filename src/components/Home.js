@@ -25,7 +25,7 @@ class Home extends Component {
 
 	addIngredient() {
 		const ingredients = this.state.ingredients;
-		const ingredient = this.state.input.trim();
+		const ingredient = this.state.input.trim().toLowerCase();
 		if (ingredient !== '') {
 			ingredients.push(ingredient);
 			this.setState({
