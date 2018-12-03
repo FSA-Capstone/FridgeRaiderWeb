@@ -15,8 +15,10 @@ import {
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { connect } from 'react-redux';
 import { getRecipe, postReview, unSaveRecipe, saveRecipe } from '../../store';
-import { FacebookShareButton, GooglePlusShareButton, TwitterShareButton, PinterestShareButton } from 'react-share';
+import { FacebookShareButton, GooglePlusShareButton, TwitterShareButton } from 'react-share';
 import { FacebookIcon, TwitterIcon, GooglePlusIcon, PinterestIcon } from 'react-share';
+import EmailForm from './EmailForm'
+
 
 class RecipeDetails extends Component {
 	constructor(props) {
@@ -24,8 +26,8 @@ class RecipeDetails extends Component {
 		this.state = {
 			recipe: {},
 			rating: '',
-      description: '',
-      authenticatedUser: this.props.authenticatedUser,
+			description: '',
+			authenticatedUser: this.props.authenticatedUser,
 			liked:
 				this.props.authenticatedUser.savedRecipes &&
 				this.props.authenticatedUser.savedRecipes.filter(
@@ -49,11 +51,11 @@ class RecipeDetails extends Component {
 		}
 		if (prevProps.authenticatedUser !== this.props.authenticatedUser) {
 			this.setState({
-        authenticatedUser: this.props.authenticatedUser,
-        liked: 
-				this.props.authenticatedUser.savedRecipes.filter(
-					(savedRecipe) => savedRecipe.properties.id === this.props.recipe.id
-				).length > 0
+				authenticatedUser: this.props.authenticatedUser,
+				liked:
+					this.props.authenticatedUser.savedRecipes.filter(
+						(savedRecipe) => savedRecipe.properties.id === this.props.recipe.id
+					).length > 0
 			});
 		}
 	}
@@ -116,7 +118,7 @@ class RecipeDetails extends Component {
 		const { classes } = this.props;
 		const { recipe, rating, description, liked } = this.state;
 		const { handleChange, postReview, saveRecipe } = this;
-		const ratings = [ 1, 2, 3, 4, 5 ];
+		const ratings = [1, 2, 3, 4, 5];
 		if (!recipe.id) return null;
 		let numRatings = 0;
 		let totalRating = 0;
@@ -127,7 +129,7 @@ class RecipeDetails extends Component {
 			});
 		}
 		const avgRating = Math.ceil(totalRating / numRatings);
-    console.log(this.state.authenticatedUser)
+		console.log(this.state.authenticatedUser)
 
 		return (
 			<Fragment>
@@ -172,25 +174,35 @@ class RecipeDetails extends Component {
 							</div>
 							<div className="socialContainer">
 								<div style={{ width: '40px' }} />
-								<FacebookShareButton
-									url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}
-									quote="I just raided my fridge!"
-								>
-									<FacebookIcon size={32} round={true} />
-								</FacebookShareButton>
 
-								<TwitterShareButton
-									url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}
-									title="I just raided my fridge!"
-								>
-									<TwitterIcon size={32} round={true} />
-								</TwitterShareButton>
+								<Button variant="contained">
+									<FacebookShareButton
+										url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}
+										quote="I just raided my fridge!"
+									>
+										<FacebookIcon size={32} round={true} />
+									</FacebookShareButton>
+								</Button>
 
-								<GooglePlusShareButton
-									url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}
-								>
-									<GooglePlusIcon size={32} round={true} />
-								</GooglePlusShareButton>
+								<Button variant="contained">
+									<TwitterShareButton
+										url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}
+										title="I just raided my fridge!"
+									>
+										<TwitterIcon size={32} round={true} />
+									</TwitterShareButton>
+								</Button>
+
+								<Button variant="contained">
+									<GooglePlusShareButton
+										url={`https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`}
+									>
+										<GooglePlusIcon size={32} round={true} />
+									</GooglePlusShareButton>
+								</Button>
+
+								<EmailForm recipeId={recipe.id} />
+
 								<div style={{ width: '40px' }} />
 							</div>
 						</div>
@@ -202,7 +214,7 @@ class RecipeDetails extends Component {
 						<ul style={{ gridColumnEnd: 'span 12', fontSize: '1.0em' }}>
 							{recipe.instructions.split('. ').map((instruction, ix) => (
 								<li key={ix} className="instruction">
-									{instruction}{instruction[instruction.length -1] == '.' ? '' : '.'}
+									{instruction}{instruction[instruction.length - 1] == '.' ? '' : '.'}
 								</li>
 							))}
 						</ul>
