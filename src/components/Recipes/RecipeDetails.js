@@ -118,6 +118,7 @@ class RecipeDetails extends Component {
 		const { classes } = this.props;
 		const { recipe, rating, description, liked } = this.state;
 		const { handleChange, postReview, saveRecipe } = this;
+		const { authenticatedUser } = this.state
 		const ratings = [1, 2, 3, 4, 5];
 		if (!recipe.id) return null;
 		let numRatings = 0;
@@ -201,7 +202,7 @@ class RecipeDetails extends Component {
 									</GooglePlusShareButton>
 								</Button>
 
-								<EmailForm recipeId={recipe.id} />
+								<EmailForm recipe = { recipe } userName = { authenticatedUser.name } />
 
 								<div style={{ width: '40px' }} />
 							</div>

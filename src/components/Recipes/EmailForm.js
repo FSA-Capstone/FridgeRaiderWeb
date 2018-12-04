@@ -10,20 +10,23 @@ import { EmailIcon } from 'react-share';
 import { sendIt } from './utils'
 
 export default class EmailForm extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor({ userName, recipe }) {
+    super({ userName, recipe });
     this.state = {
       open: false,
       targetEmail: '',
-      emailSubject: 'I raided my fridge!',
-      emailText: `I found this great recipe on Fridge Raider! Check it out:\n https://fridge-raider-capstone.herokuapp.com/#/recipes/${props.recipeId}`
+      recipientName: '',
+      emailFromName: !userName ? '' : `${userName}`,
+      emailRecipeName: `${recipe.name}`,
+      emailImg: `${recipe.imageUrl}`,
+      recipeURL: `https://fridge-raider-capstone.herokuapp.com/#/recipes/${recipe.id}`
     };
     this.handleModalChange = this.handleModalChange.bind(this);
   }
 
   handleModalChange(event) {
     this.setState({
-      targetEmail: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
@@ -32,48 +35,86 @@ export default class EmailForm extends React.Component {
   };
 
   handleModalClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleModalSend = () => {
-    sendIt(this.state)
+    const { userName } = this.props
     this.setState({
       open: false,
-      targetEmail: ''
+      targetEmail: '',
+      recipientName: '',
+      emailFromName: !userName ? '' : `${userName}`,
     });
   };
 
-  render() {
+  handleModalSend = () => {
+    const { userName } = this.props
+    sendIt(this.state)
+    this.setState({
+      open: false,
+      targetEmail: '',
+      recipientName: '',
+      emailFromName: !userName ? '' : `${userName}`,
+    });
+  };
+
+  render() {    
+    const { recipe } = this.props
     return (
       <div>
-        <Button onClick={this.handleModalClickOpen} variant="contained"><EmailIcon size={32} round={true} /></Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleModalClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Share Your Raid With A Friend!</DialogTitle>
-          <DialogContent>
-            <TextField
-              label="Email"
-              type="email"
-              name="targetEmail"
-              autoComplete="email"
-              margin="normal"
-              variant="outlined"
-              fullWidth
-              onChange={this.handleModalChange}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleModalClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleModalSend} color="primary">
-              Send
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {
+          !recipe 
+          ? null 
+          :
+          <div>
+          <Button onClick={this.handleModalClickOpen} variant="contained"><EmailIcon size={32} round={true} /></Button>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleModalClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Share Your Raid With A Friend!</DialogTitle>
+              <DialogContent>
+              <TextField
+                  label="Recipient's Name"
+                  type="name"
+                  name="recipientName"
+                  value={this.state.recipientName}
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth
+                  onChange={this.handleModalChange}
+                />
+                <TextField
+                  label="Recipient's Email"
+                  type="email"
+                  name="targetEmail"
+                  autoComplete="email"
+                  value={this.state.targetEmail}
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth
+                  onChange={this.handleModalChange}
+                />
+                <TextField
+                  label="Your Name"
+                  type="name"
+                  name="emailFromName"
+                  value={this.state.emailFromName}
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth
+                  onChange={this.handleModalChange}
+                />
+              </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleModalClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleModalSend} color="primary">
+                Send
+              </Button>
+            </DialogActions>
+          </Dialog>
+          </div>
+        }
       </div>
     );
   }
