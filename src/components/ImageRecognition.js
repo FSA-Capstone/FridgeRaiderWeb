@@ -3,21 +3,7 @@ import { InputBase, Button, Icon } from '@material-ui/core';
 import { Edit as EditIcon, Search } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { setIngredients } from '../store';
-import Clarifai from 'clarifai';
-
-const loadKey = () => {
-  try {
-    return require('../../env').CLARIFAI_KEY
-  } catch (error) {
-    return process.env.CLARIFAI_KEY
-  }
-}
-
-const CLARIFAI_KEY = loadKey()
-
-const clarifai = new Clarifai.App({
-  apiKey: CLARIFAI_KEY
- });
+import axios from 'axios'
 
 class ImageRecognition extends Component {
 	constructor(props) {
@@ -26,7 +12,7 @@ class ImageRecognition extends Component {
       imageCapture: true,
 			input: '',
       ingredients: [],
-      allIngredients: []
+      allIngredients: props.allIngredients
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
@@ -69,12 +55,16 @@ class ImageRecognition extends Component {
   }
   
   getIFI(e) {
+    console.log(e.target.files[0])
     const allIngredients = this.state.allIngredients
     var file = e.target.files[0];
     var reader = new FileReader();
     var url = reader.readAsDataURL(file);
     reader.onloadend = () => {
-      return clarifai.models.predict("bd367be194cf45149e75f01d59f77ba7", {base64: reader.result.split('base64,')[1]})
+      return axios
+      .get(
+        `${process.env.API_URL}/api/ingredients/image?image=${reader.result.split('base64,')[1]}`
+      )
         .then( response => response.outputs[0].data.concepts.filter( ingredient => ingredient.value*1 > 0.8 && allIngredients.includes(ingredient.name)))
         .then( filtered => filtered.map( ingredient => ingredient.name))
         .then( ingredients => 
@@ -104,7 +94,7 @@ class ImageRecognition extends Component {
 
 	render() {
 		const { handleSearch, handleChange, addIngredient, removeIngredient, getIFI } = this;
-		const { ingredients, input, imageCapture } = this.state;
+    const { ingredients, input, imageCapture } = this.state;
 
 		return (
 			<Fragment>
