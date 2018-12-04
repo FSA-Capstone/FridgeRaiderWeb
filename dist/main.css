@@ -292,3 +292,37 @@ a.recipeLink:hover span {
   background-color: #bbb;
   cursor: default;
 }
+#upload > div > input {
+  visibility:hidden;
+  width:0;
+  height:0
+}
+#shadow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 140px;
+  box-shadow: 0 0 30px 0 #444;
+  z-index: -1;
+}
+#uploadButton {
+  width: 280px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block;
+  cursor: pointer;
+}
+#beta {
+  position: absolute;
+  top: 30px;
+  z-index: 99;
+  color: darkred;
+  text-align: center;
+  transform: translate(-50%, 0%)rotate(-10deg);
+  margin: 0;
+  left: 50%;
+}
