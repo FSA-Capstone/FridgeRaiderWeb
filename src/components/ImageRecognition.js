@@ -26,7 +26,7 @@ class ImageRecognition extends Component {
       imageCapture: true,
 			input: '',
       ingredients: [],
-      allIngredients: []
+      allIngredients: props.allIngredients
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
@@ -69,6 +69,7 @@ class ImageRecognition extends Component {
   }
   
   getIFI(e) {
+    console.log(e.target.files[0])
     const allIngredients = this.state.allIngredients
     var file = e.target.files[0];
     var reader = new FileReader();
@@ -104,7 +105,7 @@ class ImageRecognition extends Component {
 
 	render() {
 		const { handleSearch, handleChange, addIngredient, removeIngredient, getIFI } = this;
-		const { ingredients, input, imageCapture } = this.state;
+    const { ingredients, input, imageCapture } = this.state;
 
 		return (
 			<Fragment>
