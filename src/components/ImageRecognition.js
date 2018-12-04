@@ -7,7 +7,7 @@ import Clarifai from 'clarifai';
 
 const loadKey = () => {
   try {
-    return require('../../.env').CLARIFAI_KEY
+    return require('../../env').CLARIFAI_KEY
   } catch (error) {
     return process.env.CLARIFAI_KEY
   }
