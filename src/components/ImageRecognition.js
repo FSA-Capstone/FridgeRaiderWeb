@@ -5,8 +5,18 @@ import { connect } from 'react-redux';
 import { setIngredients } from '../store';
 import Clarifai from 'clarifai';
 
+const loadKey = () => {
+  try {
+    return require('../../.env').CLARIFAI_KEY
+  } catch (error) {
+    return process.env.CLARIFAI_KEY
+  }
+}
+
+const CLARIFAI_KEY = loadKey()
+
 const clarifai = new Clarifai.App({
-  apiKey: process.env.CLARIFAI_KEY || require('../../.env').CLARIFAI_KEY
+  apiKey: CLARIFAI_KEY
  });
 
 class ImageRecognition extends Component {
