@@ -6,8 +6,7 @@ import { setIngredients } from '../store';
 import Clarifai from 'clarifai';
 
 const clarifai = new Clarifai.App({
-  // apiKey: process.env.CLARIFAI_KEY
-  apiKey: '095d1c89d41144cb9676fb396efdb266'
+  apiKey: process.env.CLARIFAI_KEY || require('../../.env').CLARIFAI_KEY
  });
 
 class ImageRecognition extends Component {
@@ -96,7 +95,6 @@ class ImageRecognition extends Component {
 	render() {
 		const { handleSearch, handleChange, addIngredient, removeIngredient, getIFI } = this;
 		const { ingredients, input, imageCapture } = this.state;
-    console.log(this.state)
 
 		return (
 			<Fragment>
