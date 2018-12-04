@@ -12,6 +12,7 @@ import Recipes from './Recipes/Recipes';
 import RecipeDetails from './Recipes/RecipeDetails';
 import MyAccount from './User/MyAccount';
 import MyRecipes from './User/MyRecipes';
+import ImageRecognition from './ImageRecognition';
 import {
   getCategories,
   getIngredients,
@@ -53,6 +54,7 @@ class App extends Component {
               render={({ history }) => <Recipes history={history} />}
             />
             <Route exact path="/" component={Home} />
+            <Route exact path="/imageRecognition" component={ImageRecognition} />
             <Route exact path="/myaccount" component={MyAccount} />
             <Route exact path="/myrecipes" component={MyRecipes} />
           </Switch>

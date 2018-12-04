@@ -68,7 +68,7 @@ const removeIngredient = (ingredient) => {
 
 // reducer
 const ingredientReducer = (state = {allIngredients:[], userIngredients: []}, action) => {
-  const newState = state;
+  const newState = {...state};
   switch (action.type) {
     case GET_INGREDIENTS:
       newState.allIngredients = action.ingredients

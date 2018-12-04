@@ -292,3 +292,8 @@ a.recipeLink:hover span {
   background-color: #bbb;
   cursor: default;
 }
+#upload > div > input {
+  visibility:hidden;
+  width:0;
+  height:0
+}
