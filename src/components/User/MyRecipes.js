@@ -14,6 +14,12 @@ class MyRecipes extends Component {
     this.setTabToZero = this.setTabToZero.bind(this);
   }
 
+
+  componentDidUpdate(){
+    console.log(this.props)
+  }
+
+
   handleChange(event, tab) {
     this.setState({ tab });
   }
@@ -47,8 +53,6 @@ class MyRecipes extends Component {
 const mapStateToProps = state => {
   let postedRecipes = [];
   let savedRecipes = [];
-
-  console.log('auth user', state.authenticatedUser);
 
   if (state.authenticatedUser.name) {
     postedRecipes = state.authenticatedUser.postedRecipes.map(

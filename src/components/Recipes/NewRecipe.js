@@ -1,9 +1,12 @@
 import React, { Fragment } from 'react';
 import { Typography, InputBase, Button } from '@material-ui/core';
 import { Edit as EditIcon, Search } from '@material-ui/icons';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
 import { createNewRecipe } from '../../store.js';
+import MenuItem from 'material-ui/MenuItem';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Paper from 'material-ui/Paper';
+import { TextField } from '@material-ui/core';
 
 class NewRecipe extends React.Component {
   constructor(props) {
@@ -15,7 +18,8 @@ class NewRecipe extends React.Component {
       cuisine: '',
       category: '',
       ingredientText: '',
-      imageUrl: ''
+      imageUrl: '',
+      value: 1
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,7 +28,7 @@ class NewRecipe extends React.Component {
 
   handleSubmit() {
     if (!this.props.authenticatedUser.id) {
-      console.log('no authenticated user');
+      console.log('No authenticated user');
       return;
     }
 
@@ -33,14 +37,16 @@ class NewRecipe extends React.Component {
       instructions: this.state.instructions,
       cuisineName: this.state.cuisine,
       categoryName: this.state.category,
-      ingredients: this.state.ingredientText.trim().toLowerCase().replace(/,/g, '\n'),
+      ingredients: this.state.ingredientText
+        .trim()
+        .toLowerCase()
+        .replace(/,/g, '\n'),
       postedByUserId: this.props.authenticatedUser.id,
       imageUrl: this.state.imageUrl
     };
 
     console.log(recipe);
-    this.props.createNewRecipe(recipe)
-      .then(() => (this.props.setTabToZero()))
+    this.props.createNewRecipe(recipe).then(() => this.props.setTabToZero());
   }
 
   handleChange(e) {
@@ -54,148 +60,170 @@ class NewRecipe extends React.Component {
     const {
       name,
       instructions,
-      category,
-      cuisine,
       imageUrl,
       ingredientText
     } = this.state;
 
+    const { categories, cuisines } = this.props
+
     return (
       <Fragment>
-        <div style={{ textAlign: 'center' }}>
-          <Typography
-            variant="title"
-            style={{
-              marginTop: '10vh',
-              marginBottom: '5vh',
-              fontWeight: 'bold'
-            }}
-          >
-            Add Your Recipes!
-          </Typography>
+        <MuiThemeProvider>
+          <div style={{ textAlign: 'center' }}>
+            <Typography
+              variant="title"
+              style={{
+                marginTop: '5vh',
+                marginBottom: '2vh',
+                fontWeight: 'bold'
+              }}
+            >
+              Add Your Recipes!
+            </Typography>
 
-          <InputBase
-            placeholder="Recipe name"
-            style={{
-              backgroundColor: '#fdfdfd',
-              padding: '3px 10px',
-              width: '400px',
-              maxWidth: '80%',
-              border: '1px solid silver',
-              height: '2.35em'
-            }}
-            onChange={handleChange}
-            value={name}
-            name={'name'}
-          />
+            <InputBase
+              placeholder="Recipe name"
+              style={{
+                backgroundColor: '#fdfdfd',
+                padding: '3px 10px',
+                width: '400px',
+                maxWidth: '80%',
+                border: '1px solid silver',
+                height: '2.35em',
+                margin: '15px'
+              }}
+              onChange={handleChange}
+              value={name}
+              name={'name'}
+            />
 
-          <br />
-          <InputBase
-            placeholder="Recipe category"
-            style={{
-              backgroundColor: '#fdfdfd',
-              padding: '3px 10px',
-              width: '400px',
-              maxWidth: '80%',
-              border: '1px solid silver',
-              height: '2.35em',
-              margin: '15px 15px'
-            }}
-            onChange={handleChange}
-            value={category}
-            name={'category'}
-          />
+            <br />
 
-          <br />
+            <Paper
+              style={{
+                textAlign: 'center',
+                width: '400px',
+                display: 'inline-block'
+              }}
+            >
+              <TextField
+                name="category"
+                select
+                label="Category"
+                style={{
+                  width: '175px',
+                  margin: '10px'
+                }}
+                className="textField"
+                value={this.state.category}
+                onChange={handleChange}
+              >
+                {categories.map(category => {
+                  return (
+                    <MenuItem value={category} key={category}>
+                      {category}
+                    </MenuItem>
+                  );
+                })}
+              </TextField>
 
-          <InputBase
-            placeholder="Type of cuisine"
-            style={{
-              backgroundColor: '#fdfdfd',
-              padding: '3px 10px',
-              width: '400px',
-              maxWidth: '80%',
-              border: '1px solid silver',
-              height: '2.35em'
-            }}
-            onChange={handleChange}
-            value={cuisine}
-            name={'cuisine'}
-          />
+              <TextField
+                name="cuisine"
+                select
+                label="Cuisine"
+                style={{
+                  width: '175px',
+                  margin: '10px'
+                }}
+                className="textField"
+                value={this.state.cuisine}
+                onChange={handleChange}
+              >
+                {cuisines.map(cuisine => {
+                  return (
+                    <MenuItem value={cuisine} key={cuisine}>
+                      {cuisine}
+                    </MenuItem>
+                  );
+                })}
+              </TextField>
+            </Paper>
 
-          <br />
+            <br />
 
-          <InputBase
-            placeholder="Recipe Instructions"
-            style={{
-              backgroundColor: '#fdfdfd',
-              margin: '15px auto 0px auto',
-              padding: '3px 10px',
-              width: '400px',
-              maxWidth: '80%',
-              border: '1px solid silver',
-              height: '6em'
-            }}
-            onChange={handleChange}
-            value={instructions}
-            multiline={true}
-            rows={4}
-            name={'instructions'}
-          />
+            <InputBase
+              placeholder="Recipe Instructions"
+              style={{
+                backgroundColor: '#fdfdfd',
+                margin: '15px auto 0px auto',
+                padding: '3px 10px',
+                width: '400px',
+                maxWidth: '80%',
+                border: '1px solid silver',
+                height: '6em'
+              }}
+              onChange={handleChange}
+              value={instructions}
+              multiline={true}
+              rows={4}
+              name={'instructions'}
+            />
 
-          <br />
+            <br />
 
-          <InputBase
-            placeholder="Ingredients (separate multiple ingredients with commas)"
-            style={{
-              backgroundColor: '#fdfdfd',
-              margin: '15px auto 15px auto',
-              padding: '3px 10px',
-              width: '400px',
-              maxWidth: '80%',
-              border: '1px solid silver',
-              height: '4.7em'
-            }}
-            onChange={handleChange}
-            value={ingredientText}
-            name={'ingredientText'}
-            rows={3}
-            multiline={true}
-          />
+            <InputBase
+              placeholder="Ingredients (separate multiple ingredients with commas)"
+              style={{
+                backgroundColor: '#fdfdfd',
+                margin: '15px auto 15px auto',
+                padding: '3px 10px',
+                width: '400px',
+                maxWidth: '80%',
+                border: '1px solid silver',
+                height: '4.7em'
+              }}
+              onChange={handleChange}
+              value={ingredientText}
+              name={'ingredientText'}
+              rows={3}
+              multiline={true}
+            />
 
-          <br />
+            <br />
 
-          <InputBase
-            placeholder="Recipe picture URL"
-            style={{
-              backgroundColor: '#fdfdfd',
-              padding: '3px 10px',
-              margin: '0px auto 15px auto',
-              width: '400px',
-              maxWidth: '80%',
-              border: '1px solid silver',
-              height: '2.35em'
-            }}
-            onChange={handleChange}
-            value={imageUrl}
-            name={'imageUrl'}
-          />
+            <InputBase
+              placeholder="Recipe picture URL"
+              style={{
+                backgroundColor: '#fdfdfd',
+                padding: '3px 10px',
+                margin: '0px auto 15px auto',
+                width: '400px',
+                maxWidth: '80%',
+                border: '1px solid silver',
+                height: '2.35em'
+              }}
+              onChange={handleChange}
+              value={imageUrl}
+              name={'imageUrl'}
+            />
 
-          <br />
+            <br />
 
-          <Button
-            style={{
-              marginLeft: '20px'
-            }}
-            size="large"
-            variant="contained"
-            onClick={this.handleSubmit}
-          >
-            SUBMIT
-            <CloudUploadIcon />
-          </Button>
-        </div>
-        <div id="main" />
+            <Button
+              style={{
+                marginLeft: '20px'
+              }}
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={this.handleSubmit}
+            >
+              SUBMIT
+            </Button>
+
+            <div id="main"> </div>
+          </div>
+        </MuiThemeProvider>
       </Fragment>
     );
   }
@@ -209,8 +237,16 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    authenticatedUser: state.authenticatedUser
+    authenticatedUser: state.authenticatedUser,
+    categories: state.categories,
+    cuisines: state.cuisines
   };
+};
+
+const styles = {
+  customWidth: {
+    width: 200
+  }
 };
 
 export default connect(

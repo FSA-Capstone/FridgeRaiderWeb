@@ -108,7 +108,6 @@ const checkForLoggedInGoogleUser = user => {
           newUser
         );
 
-
         return dispatch(_setAuthenticatedUser(newUserResponse.data));
       }
     }
@@ -142,8 +141,8 @@ const exchangeTokenForAuth = () => {
         }
       })
       .then(response => response.data)
-      .then((auth) => {
-        return axios.get(`${process.env.API_URL}/api/users/${auth.id}`)
+      .then(auth => {
+        return axios.get(`${process.env.API_URL}/api/users/${auth.id}`);
       })
       .then(response => response.data)
       .then(user => {
@@ -164,7 +163,13 @@ const logout = () => {
 const authenticatedUserReducer = (state = {}, action) => {
   switch (action.type) {
     case SET_AUTHENTICATED_USER:
-      return action.authenticatedUser;
+      return Object.assign(
+        {},
+        state,
+        action.authenticatedUser,
+        { postedRecipes: action.authenticatedUser.postedRecipes },
+        { savedRecipes: action.authenticatedUser.savedRecipes }
+      );
     default:
       return state;
   }
