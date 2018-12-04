@@ -16,7 +16,6 @@ class NewRecipe extends React.Component {
       name: '',
       instructions: '',
       cuisine: '',
-      select: '',
       category: '',
       ingredientText: '',
       imageUrl: '',
@@ -116,7 +115,7 @@ class NewRecipe extends React.Component {
                   margin: '10px'
                 }}
                 className="textField"
-                value={''}
+                value={this.state.category}
                 onChange={handleChange}
               >
                 {categories.map(category => {
@@ -137,7 +136,7 @@ class NewRecipe extends React.Component {
                   margin: '10px'
                 }}
                 className="textField"
-                value={''}
+                value={this.state.cuisine}
                 onChange={handleChange}
               >
                 {cuisines.map(cuisine => {
