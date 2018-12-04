@@ -100,6 +100,7 @@ class ImageRecognition extends Component {
 
 		return (
 			<Fragment>
+        <h1 id="beta">BETA</h1>
 				<div id="main" />
 				{ingredients.length > 0 ? (
 					<div>
@@ -136,8 +137,9 @@ class ImageRecognition extends Component {
         )}
         { imageCapture ?
         <div id="upload">
-          <label for="imageUpload">
-            <img id="uploadButton" src="https://placehold.it/100/000000/ffffff?text=UPLOAD" />
+          <div id="shadow"></div>
+          <label htmlFor="imageUpload">
+            <img id="uploadButton" src="/dist/upload.png" />
           </label>
           <InputBase id="imageUpload" type='file' onChange={getIFI} />
         </div>
