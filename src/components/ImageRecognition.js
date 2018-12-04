@@ -55,15 +55,11 @@ class ImageRecognition extends Component {
   }
   
   getIFI(e) {
-    console.log(e.target.files[0])
     const allIngredients = this.state.allIngredients
     var file = e.target.files[0];
-    var reader = new FileReader();
-    var url = reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      return axios
+    return axios
       .get(
-        `${process.env.API_URL}/api/ingredients/image?image=${reader.result.split('base64,')[1]}`
+        `${process.env.API_URL}/api/ingredients/image?image=${file}`
       )
         .then( response => response.outputs[0].data.concepts.filter( ingredient => ingredient.value*1 > 0.8 && allIngredients.includes(ingredient.name)))
         .then( filtered => filtered.map( ingredient => ingredient.name))
@@ -74,7 +70,6 @@ class ImageRecognition extends Component {
             imageCapture: false
           }))
         .catch(error => console.log(error))
-    }
   }
 
 	removeIngredient(ingredient) {
