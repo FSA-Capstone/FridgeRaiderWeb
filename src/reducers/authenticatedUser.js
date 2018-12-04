@@ -6,6 +6,13 @@ import firebase, {
 const axios = require('axios');
 
 const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
+const LOGOUT = 'LOGOUT';
+
+const _logout = () => {
+  return {
+    type: LOGOUT
+  };
+};
 
 const _setAuthenticatedUser = authenticatedUser => ({
   type: SET_AUTHENTICATED_USER,
@@ -156,7 +163,7 @@ const logout = () => {
   return dispatch => {
     window.localStorage.removeItem('token');
     dispatch(logoutGoogle());
-    dispatch(_setAuthenticatedUser({}));
+    dispatch(_logout());
   };
 };
 
@@ -170,6 +177,9 @@ const authenticatedUserReducer = (state = {}, action) => {
         { postedRecipes: action.authenticatedUser.postedRecipes },
         { savedRecipes: action.authenticatedUser.savedRecipes }
       );
+    case LOGOUT:
+      return {};
+
     default:
       return state;
   }
