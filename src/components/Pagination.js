@@ -26,7 +26,7 @@ class Pagination extends Component {
     }
     let pages = []
     if(start > 1){
-      pages.push(<Link to="/recipes/" key="a" className="pageNumbers">1</Link>)
+      pages.push(<Link to="/recipes/page/1" key="a" className="pageNumbers">1</Link>)
       if(start > 2) {
         pages.push(<span  key="adots" className="dots">...</span>)
       }
