@@ -57,10 +57,13 @@ class ImageRecognition extends Component {
   getIFI(e) {
     const allIngredients = this.state.allIngredients
     var file = e.target.files[0];
-    return axios
-      .get(
-        `${process.env.API_URL}/api/ingredients/image?image=${file}`
-      )
+    const formData = new FormData();
+    formData.append('file', file);
+    axios.post(`${process.env.API_URL}/api/ingredients/image`, formData,{
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
         .then( response => response.outputs[0].data.concepts.filter( ingredient => ingredient.value*1 > 0.8 && allIngredients.includes(ingredient.name)))
         .then( filtered => filtered.map( ingredient => ingredient.name))
         .then( ingredients => 
