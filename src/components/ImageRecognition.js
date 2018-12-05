@@ -3,7 +3,12 @@ import { InputBase, Button, Icon } from '@material-ui/core';
 import { Edit as EditIcon, Search } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { setIngredients } from '../store';
-import axios from 'axios'
+import Clarifai from 'clarifai';
+
+const clarifai = new Clarifai.App({
+  // apiKey: process.env.CLARIFAI_KEY
+  apiKey: '904d8abb524144f9b02dcc1f38be1c50'
+ });
 
 class ImageRecognition extends Component {
 	constructor(props) {
@@ -12,7 +17,7 @@ class ImageRecognition extends Component {
       imageCapture: true,
 			input: '',
       ingredients: [],
-      allIngredients: props.allIngredients
+      allIngredients: []
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.addIngredient = this.addIngredient.bind(this);
@@ -57,13 +62,10 @@ class ImageRecognition extends Component {
   getIFI(e) {
     const allIngredients = this.state.allIngredients
     var file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    axios.post(`${process.env.API_URL}/api/ingredients/image`, formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    var reader = new FileReader();
+    var url = reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      return clarifai.models.predict("bd367be194cf45149e75f01d59f77ba7", {base64: reader.result.split('base64,')[1]})
         .then( response => response.outputs[0].data.concepts.filter( ingredient => ingredient.value*1 > 0.8 && allIngredients.includes(ingredient.name)))
         .then( filtered => filtered.map( ingredient => ingredient.name))
         .then( ingredients => 
@@ -73,6 +75,7 @@ class ImageRecognition extends Component {
             imageCapture: false
           }))
         .catch(error => console.log(error))
+    }
   }
 
 	removeIngredient(ingredient) {
@@ -92,7 +95,8 @@ class ImageRecognition extends Component {
 
 	render() {
 		const { handleSearch, handleChange, addIngredient, removeIngredient, getIFI } = this;
-    const { ingredients, input, imageCapture } = this.state;
+		const { ingredients, input, imageCapture } = this.state;
+    console.log(this.state)
 
 		return (
 			<Fragment>
