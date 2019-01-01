@@ -38,13 +38,15 @@
     "babel-preset-stage-2": "^6.24.1",
     "chai": "^4.2.0",
     "css-loader": "^1.0.1",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "material-ui": "^0.20.2",
     "mocha": "^5.2.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0"
   },
   "scripts": {
-    "test": "mocha test/*.spec.js",
+    "test": "mocha test/*.spec.js --require babel-core/register",
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- --watch --mode=development & nodemon server.js --ignore src/ --ignore dist"
