@@ -28,8 +28,19 @@ const _getRecipes = recipes => {
 const createNewRecipe = recipe => {
   return (dispatch, getState) => {
     console.log(recipe);
+    const data = new FormData()
+
+    data.set('name', recipe.name)
+    data.set('instructions', recipe.instructions)
+    data.set('cuisineName', recipe.cuisineName)
+    data.set('categoryName', recipe.categoryName)
+    data.set('ingredients', recipe.ingredients)
+    data.set('imageUrl', recipe.imageUrl)
+    data.set('image', recipe.image)
+    data.set('postedByUserId', recipe.postedByUserId)
+
     return axios
-      .post(`${process.env.API_URL}/api/recipes/`, recipe)
+      .post(`${process.env.API_URL}/api/recipes/`, data)
       .then(response => {
 
         if (getState().authenticatedUser.name) {

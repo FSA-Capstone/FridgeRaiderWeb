@@ -7,6 +7,20 @@ const axios = require('axios');
 
 const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
 const LOGOUT = 'LOGOUT';
+const START_SPINNER = 'START_SPINNER';
+const STOP_SPINNER = 'STOP_SPINNER';
+
+const _startSpinner = () => {
+  return {
+    type: START_SPINNER
+  };
+};
+
+const _stopSpinner = () => {
+  return {
+    type: STOP_SPINNER
+  };
+};
 
 const _logout = () => {
   return {
@@ -81,6 +95,8 @@ const setAuthenticatedUser = user => {
 
 const checkForLoggedInGoogleUser = user => {
   return async dispatch => {
+    dispatch(_startSpinner());
+
     const firebaseRedirectResult = await firebase.auth().getRedirectResult();
 
     if (firebaseRedirectResult.user || user.email) {
@@ -94,6 +110,7 @@ const checkForLoggedInGoogleUser = user => {
 
       if (response.data.name) {
         dispatch(_setAuthenticatedUser(response.data));
+        return dispatch(_stopSpinner)
       } else {
         let finalUser;
         if (firebaseRedirectResult.user) {
@@ -115,7 +132,9 @@ const checkForLoggedInGoogleUser = user => {
           newUser
         );
 
-        return dispatch(_setAuthenticatedUser(newUserResponse.data));
+        
+        dispatch(_stopSpinner());
+        dispatch(_setAuthenticatedUser(newUserResponse.data));
       }
     }
   };
@@ -167,6 +186,19 @@ const logout = () => {
   };
 };
 
+const spinnerReducer = (state = false, action) => {
+  switch (action.type) {
+    case START_SPINNER:
+      return true;
+
+    case STOP_SPINNER:
+      return false;
+
+    default:
+      return false;
+  }
+};
+
 const authenticatedUserReducer = (state = {}, action) => {
   switch (action.type) {
     case SET_AUTHENTICATED_USER:
@@ -190,8 +222,11 @@ export {
   registerNewUser,
   checkForLoggedInGoogleUser,
   login,
+  spinnerReducer,
   logout,
   saveRecipe,
+  _startSpinner,
+  _stopSpinner,
   exchangeTokenForAuth,
   unSaveRecipe,
   setAuthenticatedUser,

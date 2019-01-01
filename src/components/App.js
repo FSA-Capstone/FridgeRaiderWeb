@@ -21,6 +21,7 @@ import {
   logout
 } from '../store';
 import { getCuisines } from '../reducers/cuisine';
+import Loader from 'react-loader-spinner';
 
 class App extends Component {
   componentDidMount() {
@@ -35,29 +36,56 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <CssBaseline />
-          <Route path="/" render={({ history, location }) => <Nav history={history} location={location} />} />
-          <Switch>
-            <Route
-              path="/login"
-              render={({ history }) => <Login history={history} />}
-            />
-            <Route path="/register" component={RegisterUser} />
-            <Route path="/registerSuccess" component={RegistrationSuccessful} />
-            <Route path="/recipes/page/:pageNumber" render={({ history, match }) => <Recipes history={history} pageNumber={match.params.pageNumber} />} />
-            <Route
-              path="/recipes/:id"
-              render={({ match }) => <RecipeDetails id={match.params.id} />}
-            />
-            <Route
-              path="/recipes"
-              render={({ history }) => <Recipes history={history} />}
-            />
-            <Route exact path="/" component={Home} />
-            <Route exact path="/imageRecognition" component={ImageRecognition} />
-            <Route exact path="/myaccount" component={MyAccount} />
-            <Route exact path="/myrecipes" component={MyRecipes} />
-          </Switch>
+          {//this.props.spinner ? (
+            //<Loader type="Puff" color="#00BFFF" height="100" //width="100" />
+          //) : (
+            <div>
+              <CssBaseline />
+              <Route
+                path="/"
+                render={({ history, location }) => (
+                  <Nav history={history} location={location} />
+                )}
+              />
+              <Switch>
+                <Route
+                  path="/login"
+                  render={({ history }) => <Login history={history} />}
+                />
+                <Route path="/register" component={RegisterUser} />
+                <Route
+                  path="/registerSuccess"
+                  component={RegistrationSuccessful}
+                />
+                <Route
+                  path="/recipes/page/:pageNumber"
+                  render={({ history, match }) => (
+                    <Recipes
+                      history={history}
+                      pageNumber={match.params.pageNumber}
+                    />
+                  )}
+                />
+                <Route
+                  path="/recipes/:id"
+                  render={({ match }) => <RecipeDetails id={match.params.id} />}
+                />
+                <Route
+                  path="/recipes"
+                  render={({ history }) => <Recipes history={history} />}
+                />
+                <Route exact path="/" component={Home} />
+                <Route
+                  exact
+                  path="/imageRecognition"
+                  component={ImageRecognition}
+                />
+                <Route exact path="/myaccount" component={MyAccount} />
+                <Route exact path="/myrecipes" component={MyRecipes} />
+              </Switch>
+            </div>
+          //)
+        }
         </Fragment>
       </Router>
     );
@@ -83,8 +111,12 @@ const mapDispatchToProps = dispatch => {
     getIngredients: () => dispatch(getIngredients())
   };
 };
-
+const mapStateToProps = ({ spinner }) => {
+  return {
+    spinner
+  };
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(App));

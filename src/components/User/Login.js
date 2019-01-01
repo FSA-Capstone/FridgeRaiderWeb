@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Grid, Button, TextField, Typography } from '@material-ui/core';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import { checkForLoggedInGoogleUser, login } from '../../store';
+import {
+  _startSpinner,
+  _stopSpinner,
+  checkForLoggedInGoogleUser,
+  login
+} from '../../store';
 import { auth, provider } from './FirebaseComponent.js';
 
 class Login extends Component {
@@ -26,7 +31,18 @@ class Login extends Component {
   };
 
   loginWithGoogle() {
-    auth.signInWithRedirect(provider)
+    //return new Promise(resolve => {
+      auth.signInWithRedirect(provider)
+    //resolve('ok')
+    //});
+  }
+
+  loginWithSpinner() {
+    //    this.props.startSpinner();
+
+    //this.loginWithGoogle()
+     
+    // .then(() => this.props.stopSpinner());
   }
 
   handleLogin(event) {
@@ -126,7 +142,9 @@ class Login extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     login: credentials => dispatch(login(credentials)),
-    checkForLoggedInGoogleUser: () => dispatch(checkForLoggedInGoogleUser())
+    checkForLoggedInGoogleUser: () => dispatch(checkForLoggedInGoogleUser()),
+    startSpinner: dispatch(_startSpinner),
+    stopSpinner: dispatch(_stopSpinner)
   };
 };
 
