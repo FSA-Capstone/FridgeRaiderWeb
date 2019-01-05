@@ -4,11 +4,11 @@ import { getRecipe } from './singleRecipe';
 
 // action constants
 const GET_RECIPES = 'GET_RECIPES';
-const ADD_RECIPE = 'ADD_RECIPE';
+export const ADD_RECIPE = 'ADD_RECIPE';
 const GET_RECIPE = 'GET_RECIPE';
 
 // action creators
-const _addRecipe = recipe => {
+export const _addRecipe = recipe => {
   return {
     type: ADD_RECIPE,
     recipe
@@ -24,30 +24,28 @@ const _getRecipes = recipes => {
 
 // thunks
 
-
 const createNewRecipe = recipe => {
   return (dispatch, getState) => {
     console.log(recipe);
-    const data = new FormData()
+    const data = new FormData();
 
-    data.set('name', recipe.name)
-    data.set('instructions', recipe.instructions)
-    data.set('cuisineName', recipe.cuisineName)
-    data.set('categoryName', recipe.categoryName)
-    data.set('ingredients', recipe.ingredients)
-    data.set('imageUrl', recipe.imageUrl)
-    data.set('image', recipe.image)
-    data.set('postedByUserId', recipe.postedByUserId)
+    data.set('name', recipe.name);
+    data.set('instructions', recipe.instructions);
+    data.set('cuisineName', recipe.cuisineName);
+    data.set('categoryName', recipe.categoryName);
+    data.set('ingredients', recipe.ingredients);
+    data.set('imageUrl', recipe.imageUrl);
+    data.set('image', recipe.image);
+    data.set('postedByUserId', recipe.postedByUserId);
 
     return axios
       .post(`${process.env.API_URL}/api/recipes/`, data)
       .then(response => {
-
         if (getState().authenticatedUser.name) {
           dispatch(setAuthenticatedUser(response.data));
         }
-        
-        return
+
+        return;
       });
   };
 };
@@ -92,9 +90,4 @@ const recipeReducer = (state = [], action) => {
   return state;
 };
 
-export {
-  createNewRecipe,
-  recipeReducer,
-  getRecipesForIngredients,
-  postReview
-};
+export { createNewRecipe, recipeReducer, getRecipesForIngredients, postReview };

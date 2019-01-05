@@ -1,0 +1,43 @@
+{
+  "categories":[
+    {
+        "_id": 814,
+        "_labels": [
+            "Category"
+        ],
+        "id": "5b779b51-8f4a-477f-abf1-d9ecf57e984b",
+        "name": "Main Course"
+    },
+    {
+        "_id": 843,
+        "_labels": [
+            "Category"
+        ],
+        "id": "01e41ab3-50cf-4a3d-a1e2-b9beaaff60bf",
+        "name": "Breakfast"
+    },
+    {
+        "_id": 902,
+        "_labels": [
+            "Category"
+        ],
+        "id": "0f2ce587-c85d-4455-8565-4b404fda07ab",
+        "name": "Desert"
+    },
+    {
+        "_id": 1133,
+        "_labels": [
+            "Category"
+        ],
+        "id": "e3107107-6e13-4e6c-89f2-ce8661f172d0",
+        "name": "Side"
+    },
+    {
+        "_id": 1137,
+        "_labels": [
+            "Category"
+        ],
+        "id": "0cf23e48-0f72-423e-a265-6b069930099c",
+        "name": "Pasta"
+    }
+]}

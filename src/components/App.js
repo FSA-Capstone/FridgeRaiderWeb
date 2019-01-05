@@ -21,7 +21,7 @@ import {
   logout
 } from '../store';
 import { getCuisines } from '../reducers/cuisine';
-import Loader from 'react-loader-spinner';
+//import Loader from 'react-loader-spinner';
 
 class App extends Component {
   componentDidMount() {
@@ -36,9 +36,10 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          {//this.props.spinner ? (
+          {
+            //this.props.spinner ? (
             //<Loader type="Puff" color="#00BFFF" height="100" //width="100" />
-          //) : (
+            //) : (
             <div>
               <CssBaseline />
               <Route
@@ -84,8 +85,8 @@ class App extends Component {
                 <Route exact path="/myrecipes" component={MyRecipes} />
               </Switch>
             </div>
-          //)
-        }
+            //)
+          }
         </Fragment>
       </Router>
     );
@@ -115,7 +116,7 @@ const mapStateToProps = ({ spinner }) => {
   return {
     spinner
   };
-}
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

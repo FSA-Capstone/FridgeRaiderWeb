@@ -25,9 +25,10 @@ import {
   addIngredient
 } from '../../store';
 
-class Recipes extends Component {
+export class Recipes extends Component {
   constructor(props) {
     super(props);
+
     let cuisines = {};
     let mealTypes = {};
     if (props.cuisines) {
@@ -401,6 +402,7 @@ class Recipes extends Component {
                 style={{ height: '440px', width: '306px', margin: '20px 15px' }}
               >
                 <RecipeCard
+                  className="recipeCard"
                   history={this.props.history}
                   recipe={recipe}
                   userIngredients={userIngredients}
