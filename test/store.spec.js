@@ -1,3 +1,7 @@
+import { expect } from 'chai';
+import Enzyme, { shallow } from 'enzyme';
+import EnzymeAdapter from 'enzyme-adapter-react-16';
+import React from 'react';
 import {ADD_RECIPE, _addRecipe } from '../src/reducers/recipe.js';
 import fetchMock from 'fetch-mock'
 import configureMockStore from 'redux-mock-store'
@@ -17,5 +21,10 @@ describe('add recipe action', () => {
   })
 })
 
+  //it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', () => {
+    //fetchMock.getOnce('/todos', {
+      //body: { todos: ['do something'] },
+      //headers: { 'content-type': 'application/json' }
+    //})
 
 
