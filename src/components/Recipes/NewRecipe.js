@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import { TextField } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
 
 class NewRecipe extends React.Component {
   constructor(props) {
@@ -19,13 +20,18 @@ class NewRecipe extends React.Component {
       category: '',
       ingredientText: '',
       imageUrl: '',
-      value: 1
+      value: 1,
+      image: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImage = this.handleImage.bind(this);
   }
 
+  componentDidUpdate() {
+    console.log(this.state.image);
+  }
   handleSubmit() {
     if (!this.props.authenticatedUser.id) {
       console.log('No authenticated user');
@@ -42,13 +48,18 @@ class NewRecipe extends React.Component {
         .toLowerCase()
         .replace(/,/g, '\n'),
       postedByUserId: this.props.authenticatedUser.id,
-      imageUrl: this.state.imageUrl
+      imageUrl: this.state.imageUrl,
+      image: this.state.image
     };
 
     console.log(recipe);
     this.props.createNewRecipe(recipe).then(() => this.props.setTabToZero());
   }
-
+  handleImage = event => {
+    this.setState({
+      image: event.target.files[0]
+    });
+  };
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -56,15 +67,8 @@ class NewRecipe extends React.Component {
   }
   render() {
     const { handleChange } = this;
-
-    const {
-      name,
-      instructions,
-      imageUrl,
-      ingredientText
-    } = this.state;
-
-    const { categories, cuisines } = this.props
+    const { name, instructions, imageUrl, ingredientText } = this.state;
+    const { categories, cuisines } = this.props;
 
     return (
       <Fragment>
@@ -191,27 +195,29 @@ class NewRecipe extends React.Component {
 
             <br />
 
-            <InputBase
-              placeholder="Recipe picture URL"
-              style={{
-                backgroundColor: '#fdfdfd',
-                padding: '3px 10px',
-                margin: '0px auto 15px auto',
-                width: '400px',
-                maxWidth: '80%',
-                border: '1px solid silver',
-                height: '2.35em'
-              }}
-              onChange={handleChange}
-              value={imageUrl}
-              name={'imageUrl'}
-            />
 
+
+
+1.2m
+8-9 hours
+
+
+
+
+            <Input
+              style={{
+                margin: '0px 15px'
+              }}
+              type="file"
+              name="image"
+              id=""
+              onChange={this.handleImage}
+            />
             <br />
 
             <Button
               style={{
-                marginLeft: '20px'
+                margin: '15px'
               }}
               size="large"
               variant="contained"
@@ -220,7 +226,7 @@ class NewRecipe extends React.Component {
             >
               SUBMIT
             </Button>
-
+            <br />
             <div id="main"> </div>
           </div>
         </MuiThemeProvider>

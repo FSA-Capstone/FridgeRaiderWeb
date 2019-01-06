@@ -16,6 +16,9 @@ import {
   setAuthenticatedUserOnRefresh,
   exchangeTokenForAuth,
   unSaveRecipe,
+  _startSpinner,
+  _stopSpinner,
+  spinnerReducer,
   registerNewUser,
   saveRecipe
 } from './reducers/authenticatedUser';
@@ -27,6 +30,7 @@ import { singleRecipeReducer, getRecipe } from './reducers/singleRecipe';
 const reducer = combineReducers({
   authenticatedUser: authenticatedUserReducer,
   recipes: recipeReducer,
+  spinner: spinnerReducer,
   recipe: singleRecipeReducer,
   ingredients: ingredientReducer,
   cuisines: cuisineReducer,
@@ -49,6 +53,8 @@ export {
   getRecipe,
   postReview,
   unSaveRecipe,
+  _startSpinner,
+  _stopSpinner,
   createNewRecipe,
   getIngredients,
   setIngredients,

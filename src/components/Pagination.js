@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Typography } from '@material-ui/core'
 
-class Pagination extends Component {
+export class Pagination extends Component {
 	constructor(props) {
 		super(props);
 		this.paginate = this.paginate.bind(this);
@@ -40,9 +40,9 @@ class Pagination extends Component {
     }
     if(!top) {
         if(end < (maxPages - 1)) {
-          pages.push(<span key="bdots" className="dots">...</span>)
+          pages.push(<span key="bdots" className="endingDots">...</span>)
         }
-        pages.push(<Link to={`/recipes/page/${maxPages}}`} key="b" className="pageNumbers">{maxPages}</Link>)
+        pages.push(<Link to={`/recipes/page/${maxPages}`} key="b" className="pageNumbers finalPage">{maxPages}</Link>)
     }
     return pages
   }

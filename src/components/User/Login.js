@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Grid, Button, TextField, Typography } from '@material-ui/core';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import { checkForLoggedInGoogleUser, login } from '../../store';
+import {
+  _startSpinner,
+  _stopSpinner,
+  checkForLoggedInGoogleUser,
+  login
+} from '../../store';
 import { auth, provider } from './FirebaseComponent.js';
 
-class Login extends Component {
+export class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -26,7 +31,16 @@ class Login extends Component {
   };
 
   loginWithGoogle() {
-    auth.signInWithRedirect(provider)
+    //return new Promise(resolve => {
+    auth.signInWithRedirect(provider);
+    //resolve('ok')
+    //});
+  }
+
+  loginWithSpinner() {
+    //    this.props.startSpinner();
+    //this.loginWithGoogle()
+    // .then(() => this.props.stopSpinner());
   }
 
   handleLogin(event) {
@@ -66,6 +80,7 @@ class Login extends Component {
                   >
                     <TextField
                       required
+                      className="textField"
                       id="userName"
                       label="Username"
                       variant="outlined"
@@ -79,6 +94,7 @@ class Login extends Component {
                       id="password"
                       label="Password"
                       variant="outlined"
+                      className="textField"
                       style={styles.element}
                       value={password}
                       type="password"
@@ -86,6 +102,7 @@ class Login extends Component {
                     />
 
                     <Button
+                      className="loginButton"
                       variant="contained"
                       style={{ width: '10vw', height: '6vh', margin: 10 }}
                       onClick={handleLogin}
@@ -110,6 +127,7 @@ class Login extends Component {
                   <p />
 
                   <img
+                    className="loginButton"
                     onClick={this.loginWithGoogle}
                     src="../../../dist/btn_google_signin_dark_normal_web.png"
                   />
@@ -126,7 +144,9 @@ class Login extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     login: credentials => dispatch(login(credentials)),
-    checkForLoggedInGoogleUser: () => dispatch(checkForLoggedInGoogleUser())
+    checkForLoggedInGoogleUser: () => dispatch(checkForLoggedInGoogleUser()),
+    startSpinner: dispatch(_startSpinner),
+    stopSpinner: dispatch(_stopSpinner)
   };
 };
 

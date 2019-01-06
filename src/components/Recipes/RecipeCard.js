@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { unSaveRecipe, saveRecipe } from '../../store.js';
 import { connect } from 'react-redux';
 
-class RecipeCard extends React.Component {
+export class RecipeCard extends React.Component {
   state = {
     liked:
       this.props.authenticatedUser.savedRecipes &&
@@ -94,7 +94,7 @@ class RecipeCard extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <div onClick={() => this.saveRecipe(recipe)}>
+          <div className="favoriteIcon" onClick={() => this.saveRecipe(recipe)}>
             <IconButton aria-label="Add to wish list">
               {liked ? (
                 <FavoriteIcon style={{ color: 'red' }} />

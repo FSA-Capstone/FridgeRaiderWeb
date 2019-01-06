@@ -7,7 +7,6 @@ import {
   IconButton,
   Button,
   Badge,
-  InputBase,
   Menu,
   MenuItem
 } from '@material-ui/core';
@@ -127,6 +126,7 @@ class Nav extends Component {
             )}
           </Toolbar>
         </AppBar>
+        )}
       </Fragment>
     );
   }
@@ -140,9 +140,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const mapStateToProps = ({ authenticatedUser }) => {
+const mapStateToProps = ({ authenticatedUser, spinner }) => {
   return {
-    authenticatedUser
+    authenticatedUser,
+    spinner
   };
 };
 
