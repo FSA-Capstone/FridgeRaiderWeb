@@ -1,0 +1,164 @@
+{
+  "cuisines": [
+    {
+        "_id": 256,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "e0496581-3a4f-42d8-b3b2-2ffafcd33462",
+        "name": "Russian"
+    },
+    {
+        "_id": 815,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "d8afbec6-b49f-4d41-b94f-981d0ee02697",
+        "name": "British"
+    },
+    {
+        "_id": 816,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "a81650f5-2f63-4064-ae37-c77d126ba4d6",
+        "name": "French"
+    },
+    {
+        "_id": 818,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "84270213-952a-472a-a492-7226c923b536",
+        "name": "American"
+    },
+    {
+        "_id": 821,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "7deaafa5-90a2-4440-9599-41c706925aca",
+        "name": "Irish"
+    },
+    {
+        "_id": 823,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "da46266c-cf30-4c1e-8ce5-b779feaa4ba1",
+        "name": "Jamaican"
+    },
+    {
+        "_id": 827,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "1166199e-3668-4de1-9a55-e5b132baaeea",
+        "name": "Thai"
+    },
+    {
+        "_id": 833,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "44e0b9f9-c40b-4f95-8373-aa042c04f258",
+        "name": "Canadian"
+    },
+    {
+        "_id": 838,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "6f507274-3855-4bbb-a101-61d50fbc741c",
+        "name": "Italian"
+    },
+    {
+        "_id": 848,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "9a496108-3ea4-4a50-a038-35b0e0188ba7",
+        "name": "Mexican"
+    },
+    {
+        "_id": 880,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "7261d0f3-3598-4aed-bd17-f4b8299a6f36",
+        "name": "Moroccan"
+    },
+    {
+        "_id": 885,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "92e19733-7554-4839-885f-e724ca42df00",
+        "name": "Indian"
+    },
+    {
+        "_id": 887,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "22b646b3-22a8-4f71-8534-9f8adb26981d",
+        "name": "Japanese"
+    },
+    {
+        "_id": 1010,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "04336223-e3bb-4e9f-b8d9-21f1bb8f6c81",
+        "name": "Unknown"
+    },
+    {
+        "_id": 1048,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "bb001175-e161-48d8-b669-7f87b01b839a",
+        "name": "Vietnamese"
+    },
+    {
+        "_id": 1075,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "8c18eed2-150b-4775-bdd4-e39c9b77aca7",
+        "name": "Greek"
+    },
+    {
+        "_id": 1093,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "86d13957-a3ca-4108-b1db-815849d743f3",
+        "name": "Dutch"
+    },
+    {
+        "_id": 1112,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "4e9eaa5b-f05f-4396-815a-fbe3ae4745ca",
+        "name": "Chinese"
+    },
+    {
+        "_id": 1145,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "aa33625a-2b88-4d7f-8494-dd967fce9635",
+        "name": "Malaysian"
+    },
+    {
+        "_id": 1150,
+        "_labels": [
+            "Cuisine"
+        ],
+        "id": "642b61bf-a40e-42f8-a8af-53a3237a2b0c",
+        "name": "Spanish"
+    }
+]}
+

@@ -5,3 +5,4 @@ package-lock.json
 env.js
 .env.js
 webpack.config.js
+s3credentials.csv

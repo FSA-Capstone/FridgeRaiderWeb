@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "name": "Fridge Raider",
+      "userName": "fridgeRaider",
+      "password": "admin",
+      "email": "fridgeRaider@email.com"
+    },
+    {
+      "name": "John Doe",
+      "userName": "john",
+      "password": "doe",
+      "email": "john@email.com"
+    },
+    {
+      "name": "Adell Thom",
+      "userName": "adell",
+      "password": "thom",
+      "email": "adell@email.com"
+    },
+    {
+      "name": "Larry David",
+      "userName": "larry",
+      "password": "david",
+      "email": "larry@email.com"
+    }
+  ]
+}
